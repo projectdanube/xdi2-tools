@@ -1,50 +1,90 @@
 package xdi2.tools;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.util.Arrays;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.GenericXmlApplicationContext;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
+import xdi2.tools.annotations.CommandArgs;
+import xdi2.tools.annotations.CommandName;
+import xdi2.tools.annotations.CommandUsage;
+import xdi2.tools.commands.Command;
+import xdi2.tools.commands.CommandGenerateDigestSecret;
+import xdi2.tools.commands.CommandMigrateGraphs;
 
 public class XDI2Tools {
 
+	private final static Command[] commands = new Command[] {
+		new CommandGenerateDigestSecret(),
+		new CommandMigrateGraphs()
+	};
+
 	public static void main(String... args) throws Exception {
 
-		String applicationContextPath;
+		if (args.length < 1) {
 
-		if (args.length == 1) {
-
-			applicationContextPath = args[0];
-		} else if (args.length == 0) {
-
-			applicationContextPath = "applicationContext.xml";
-		} else {
-
-			usage();
+			commandUsage(null);
 			return;
 		}
 
-		File applicationContextFile = new File(applicationContextPath);
-		if (! applicationContextFile.exists()) throw new FileNotFoundException(applicationContextPath + " not found");
+		String commandName = args[0];
+		Command command = findCommand(commandName);
 
-		Resource applicationContextResource = new FileSystemResource(applicationContextFile);
+		if (command == null) {
 
-		makeApplicationContext(applicationContextResource);
+			printUsage(null);
+			return;
+		}
+
+		String[] commandArgs = Arrays.copyOfRange(args, 1, args.length);
+
+		if (commandArgs.length < commandMinArgs(command) || commandArgs.length > commandMaxArgs(command)) {
+
+			printUsage(command);
+		}
+		
+		command.execute(commandArgs);
 	}
 
-	private static void usage() {
+	private static Command findCommand(String commandName) {
 
-		System.out.println("Usage: java -jar xdi2-tools-XXX.one-jar.jar <path-to-applicationContext.xml>");
+		for (Command command : commands) {
+
+			if (commandName.equals(commandName(command))) return command;
+		}
+
+		return null;
 	}
 
-	private static ApplicationContext makeApplicationContext(Resource... resources) {
+	private static void printUsage(Command command) {
 
-		GenericXmlApplicationContext applicationContext = new GenericXmlApplicationContext();
-		applicationContext.load(resources);
-		applicationContext.refresh();
+		System.out.println("Usage: java -jar xdi2-tools-XXX.one-jar.jar");
 
-		return applicationContext;
+		if (command == null) {
+			for (Command c : commands) {
+
+				System.out.println("   " + c.getClass().getAnnotation(CommandName.class).value() + " " + c.getClass().getAnnotation(CommandUsage.class).value());
+			}
+		} else {
+
+			System.out.println("   " + command.getClass().getAnnotation(CommandName.class).value() + " " + command.getClass().getAnnotation(CommandUsage.class).value());
+		}
+	}
+
+	private static String commandName(Command command) {
+
+		return command.getClass().getAnnotation(CommandName.class).value();
+	}
+
+	private static String commandUsage(Command command) {
+
+		return command.getClass().getAnnotation(CommandUsage.class).value();
+	}
+
+	private static int commandMinArgs(Command command) {
+
+		return command.getClass().getAnnotation(CommandArgs.class).min();
+	}
+
+	private static int commandMaxArgs(Command command) {
+
+		return command.getClass().getAnnotation(CommandArgs.class).max();
 	}
 }

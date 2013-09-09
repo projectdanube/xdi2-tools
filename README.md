@@ -17,6 +17,10 @@ After that, just run
 
 To build all components.
 
+### How to run
+
+	java -jar target/xdi2-tools-*.one-jar.jar
+
 ### Community
 
 Google Group: http://groups.google.com/group/xdi2

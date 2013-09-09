@@ -61,6 +61,7 @@ public class XDI2Tools {
 		if (commandArgs.length < commandMinArgs(command) || commandArgs.length > commandMaxArgs(command)) {
 
 			printUsage(command);
+			return;
 		}
 		
 		command.execute(commandArgs);

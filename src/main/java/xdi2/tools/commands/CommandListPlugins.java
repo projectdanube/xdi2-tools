@@ -15,8 +15,16 @@ public class CommandListPlugins implements Command {
 	@Override
 	public void execute(String[] commandArgs) throws Exception {
 
-		for (File file : PluginsLoader.getFiles()) {
-			
+		File[] files = PluginsLoader.getFiles();
+
+		if (files == null) {
+
+			System.out.println("No plugins.");
+			return;
+		}
+
+		for (File file : files) {
+
 			System.out.println(file.getAbsolutePath());
 		}
 	}

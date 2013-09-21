@@ -48,7 +48,7 @@ public class CommandMigrateGraphs implements Command {
 	}
 
 	private static void migrateMessagingTargets(HttpEndpointRegistry inputHttpEndpointRegistry, HttpEndpointRegistry outputHttpEndpointRegistry) {
-		
+
 		for (String messagingTargetPath : inputHttpEndpointRegistry.getMessagingTargetPaths()) {
 
 			MessagingTarget inputMessagingTarget = inputHttpEndpointRegistry.getMessagingTarget(messagingTargetPath);
@@ -65,26 +65,7 @@ public class CommandMigrateGraphs implements Command {
 			MessagingTargetFactory inputMessagingTargetFactory = inputHttpEndpointRegistry.getMessagingTargetFactory(messagingTargetFactoryPath);
 			MessagingTargetFactory outputMessagingTargetFactory = outputHttpEndpointRegistry.getMessagingTargetFactory(messagingTargetFactoryPath);
 
-			if (inputMessagingTargetFactory == null || ! (inputMessagingTargetFactory instanceof RegistryGraphMessagingTargetFactory)) continue;
-			if (outputMessagingTargetFactory == null || ! (outputMessagingTargetFactory instanceof RegistryGraphMessagingTargetFactory)) continue;
-
-			if (! (((RegistryGraphMessagingTargetFactory) inputMessagingTargetFactory).getPrototypeMessagingTarget() instanceof GraphMessagingTarget)) continue;
-			if (! (((RegistryGraphMessagingTargetFactory) outputMessagingTargetFactory).getPrototypeMessagingTarget() instanceof GraphMessagingTarget)) continue;
-
-			Iterator<String> requestPaths = ((RegistryGraphMessagingTargetFactory) inputMessagingTargetFactory).getRequestPaths(messagingTargetFactoryPath);
-
-			while (requestPaths.hasNext()) {
-
-				String requestPath = requestPaths.next();
-				String messagingTargetPath = requestPath;
-
-				MessagingTarget inputMessagingTarget = inputMessagingTargetFactory.mountMessagingTarget(inputHttpEndpointRegistry, messagingTargetFactoryPath, requestPath);
-				MessagingTarget outputMessagingTarget = outputMessagingTargetFactory.mountMessagingTarget(outputHttpEndpointRegistry, messagingTargetFactoryPath, requestPath);
-
-				migrateMessagingTarget(messagingTargetPath, inputMessagingTarget, outputMessagingTarget);
-			}
-
-			System.out.println("At path " + messagingTargetFactoryPath + " migrated from " + inputMessagingTargetFactory.getClass().getSimpleName() + " to " + outputMessagingTargetFactory.getClass().getSimpleName());
+			migrateMessagingTargetFactory(messagingTargetFactoryPath, inputMessagingTargetFactory, outputMessagingTargetFactory, inputHttpEndpointRegistry, outputHttpEndpointRegistry);
 		}
 	}
 
@@ -105,5 +86,29 @@ public class CommandMigrateGraphs implements Command {
 		outputGraph.close();
 
 		System.out.println("At path " + messagingTargetPath + " copied " + inputGraph.getRootContextNode().getAllStatementCount() + " statements from " + inputGraph.getClass().getSimpleName() + " to " + outputGraph.getRootContextNode().getAllStatementCount() + " statements in " + outputGraph.getClass().getSimpleName());
+	}
+
+	private static void migrateMessagingTargetFactory(String messagingTargetFactoryPath, MessagingTargetFactory inputMessagingTargetFactory, MessagingTargetFactory outputMessagingTargetFactory, HttpEndpointRegistry inputHttpEndpointRegistry, HttpEndpointRegistry outputHttpEndpointRegistry) throws Xdi2ServerException, Xdi2MessagingException {
+
+		if (inputMessagingTargetFactory == null || ! (inputMessagingTargetFactory instanceof RegistryGraphMessagingTargetFactory)) return;
+		if (outputMessagingTargetFactory == null || ! (outputMessagingTargetFactory instanceof RegistryGraphMessagingTargetFactory)) return;
+
+		if (! (((RegistryGraphMessagingTargetFactory) inputMessagingTargetFactory).getPrototypeMessagingTarget() instanceof GraphMessagingTarget)) return;
+		if (! (((RegistryGraphMessagingTargetFactory) outputMessagingTargetFactory).getPrototypeMessagingTarget() instanceof GraphMessagingTarget)) return;
+
+		Iterator<String> requestPaths = ((RegistryGraphMessagingTargetFactory) inputMessagingTargetFactory).getRequestPaths(messagingTargetFactoryPath);
+
+		while (requestPaths.hasNext()) {
+
+			String requestPath = requestPaths.next();
+			String messagingTargetPath = requestPath;
+
+			MessagingTarget inputMessagingTarget = inputMessagingTargetFactory.mountMessagingTarget(inputHttpEndpointRegistry, messagingTargetFactoryPath, requestPath);
+			MessagingTarget outputMessagingTarget = outputMessagingTargetFactory.mountMessagingTarget(outputHttpEndpointRegistry, messagingTargetFactoryPath, requestPath);
+
+			migrateMessagingTarget(messagingTargetPath, inputMessagingTarget, outputMessagingTarget);
+		}
+
+		System.out.println("At path " + messagingTargetFactoryPath + " migrated from " + inputMessagingTargetFactory.getClass().getSimpleName() + " to " + outputMessagingTargetFactory.getClass().getSimpleName());
 	}
 }

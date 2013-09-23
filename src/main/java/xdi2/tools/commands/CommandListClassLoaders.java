@@ -15,8 +15,10 @@ public class CommandListClassLoaders implements Command {
 		ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
 		printClassLoader(systemClassLoader, "[SYSTEM] ");
 
-		ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
-		printClassLoader(contextClassLoader, "[CONTEXT] ");
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		printClassLoader(contextClassLoader, "[" + currentThread.getName() + "] ");
 	}
 
 	private static void printClassLoader(ClassLoader classLoader, String prefix) {

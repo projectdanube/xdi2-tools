@@ -28,7 +28,7 @@ public class XDI2Tools {
 	public static void main(String... args) throws Exception {
 
 		// check arguments
-		
+
 		if (args.length < 1) {
 
 			printUsage(null);
@@ -36,7 +36,7 @@ public class XDI2Tools {
 		}
 
 		// find command
-		
+
 		String commandName = args[0];
 		Command command = findCommand(commandName);
 
@@ -55,9 +55,9 @@ public class XDI2Tools {
 
 			throw new Xdi2ServerException("Cannot load plugins: " + ex.getMessage(), ex);
 		}
-		
+
 		// execute command
-		
+
 		String[] commandArgs = Arrays.copyOfRange(args, 1, args.length);
 
 		if (commandArgs.length < commandMinArgs(command) || commandArgs.length > commandMaxArgs(command)) {
@@ -65,7 +65,7 @@ public class XDI2Tools {
 			printUsage(command);
 			return;
 		}
-		
+
 		command.execute(commandArgs);
 	}
 

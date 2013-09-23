@@ -79,11 +79,9 @@ public class CommandMigrateGraphs implements Command {
 		Graph tempGraph = MemoryGraphFactory.getInstance().openGraph();
 
 		CopyUtil.copyGraph(inputGraph, tempGraph, null);
-		inputGraph.close();
 
 		outputGraph.clear();
 		CopyUtil.copyGraph(tempGraph, outputGraph, null);
-		outputGraph.close();
 
 		System.out.println("At path " + messagingTargetPath + " copied " + inputGraph.getRootContextNode().getAllStatementCount() + " statements from " + inputGraph.getClass().getSimpleName() + " to " + outputGraph.getRootContextNode().getAllStatementCount() + " statements in " + outputGraph.getClass().getSimpleName());
 	}
@@ -107,6 +105,9 @@ public class CommandMigrateGraphs implements Command {
 			MessagingTarget outputMessagingTarget = outputMessagingTargetFactory.mountMessagingTarget(outputHttpEndpointRegistry, messagingTargetFactoryPath, requestPath);
 
 			migrateMessagingTarget(messagingTargetPath, inputMessagingTarget, outputMessagingTarget);
+
+			inputHttpEndpointRegistry.unmountMessagingTarget(inputMessagingTarget);
+			outputHttpEndpointRegistry.unmountMessagingTarget(outputMessagingTarget);
 		}
 
 		System.out.println("At path " + messagingTargetFactoryPath + " migrated from " + inputMessagingTargetFactory.getClass().getSimpleName() + " to " + outputMessagingTargetFactory.getClass().getSimpleName());

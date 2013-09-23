@@ -10,6 +10,7 @@ import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
 import xdi2.tools.commands.Command;
 import xdi2.tools.commands.CommandGenerateDigestSecret;
+import xdi2.tools.commands.CommandListClassLoaders;
 import xdi2.tools.commands.CommandListGraphs;
 import xdi2.tools.commands.CommandListPlugins;
 import xdi2.tools.commands.CommandMigrateGraphs;
@@ -18,6 +19,7 @@ public class XDI2Tools {
 
 	private final static Command[] commands = new Command[] {
 		new CommandListPlugins(),
+		new CommandListClassLoaders(),
 		new CommandListGraphs(),
 		new CommandMigrateGraphs(),
 		new CommandGenerateDigestSecret()

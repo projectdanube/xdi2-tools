@@ -5,10 +5,10 @@ import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandUsage;
 
-@CommandName("generate-digest-secret")
+@CommandName("generate-digest-secret-token")
 @CommandUsage("secretToken globalSalt [localSalt]")
 @CommandArgs(min=2,max=3)
-public class CommandGenerateDigestSecret implements Command {
+public class CommandGenerateDigestSecretToken implements Command {
 
 	@Override
 	public void execute(String[] commandArgs) throws Exception {

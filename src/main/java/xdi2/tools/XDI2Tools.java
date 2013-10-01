@@ -9,7 +9,7 @@ import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
 import xdi2.tools.commands.Command;
-import xdi2.tools.commands.CommandGenerateDigestSecret;
+import xdi2.tools.commands.CommandGenerateDigestSecretToken;
 import xdi2.tools.commands.CommandListClassLoaders;
 import xdi2.tools.commands.CommandListGraphs;
 import xdi2.tools.commands.CommandListPlugins;
@@ -22,7 +22,7 @@ public class XDI2Tools {
 		new CommandListClassLoaders(),
 		new CommandListGraphs(),
 		new CommandMigrateGraphs(),
-		new CommandGenerateDigestSecret()
+		new CommandGenerateDigestSecretToken()
 	};
 
 	public static void main(String... args) throws Exception {

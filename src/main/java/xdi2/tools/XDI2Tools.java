@@ -9,6 +9,7 @@ import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
 import xdi2.tools.commands.Command;
+import xdi2.tools.commands.CommandDiscovery;
 import xdi2.tools.commands.CommandGenerateDigestSecretToken;
 import xdi2.tools.commands.CommandListClassLoaders;
 import xdi2.tools.commands.CommandListGraphs;
@@ -21,6 +22,7 @@ public class XDI2Tools {
 		new CommandListPlugins(),
 		new CommandListClassLoaders(),
 		new CommandListGraphs(),
+		new CommandDiscovery(),
 		new CommandMigrateGraphs(),
 		new CommandGenerateDigestSecretToken()
 	};

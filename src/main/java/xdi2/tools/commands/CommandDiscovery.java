@@ -21,56 +21,58 @@ public class CommandDiscovery implements Command {
 		String address = commandArgs[0];
 		String endpoint = commandArgs.length > 1 ? commandArgs[1] : null;
 
-		XDIDiscoveryResult discoveryResult1 = null;
-		XDIDiscoveryResult discoveryResult2 = null;
+		XDIDiscoveryResult discoveryResultRegistry = null;
+		XDIDiscoveryResult discoveryResultAuthority = null;
 
 		long start = System.currentTimeMillis();
 
 		try {
 
 			// start discovery
-			
+
 			XDIDiscoveryClient discoveryClient = endpoint == null ? new XDIDiscoveryClient() : new XDIDiscoveryClient(new XDIHttpClient(endpoint));
 
 			// from registry
-			
-			discoveryResult1 = discoveryClient.discoverFromRegistry(XDI3Segment.create(address));
-			
-			// from authority
-			
-			if (discoveryResult1 != null && discoveryResult1.getXdiEndpointUri() != null) {
 
-				discoveryResult2 = discoveryClient.discoverFromAuthority(discoveryResult1.getXdiEndpointUri(), discoveryResult1.getCloudNumber());
+			discoveryResultRegistry = discoveryClient.discoverFromRegistry(XDI3Segment.create(address));
+
+			// from authority
+
+			if (discoveryResultRegistry != null && discoveryResultRegistry.getXdiEndpointUri() != null) {
+
+				discoveryResultAuthority = discoveryClient.discoverFromAuthority(discoveryResultRegistry.getXdiEndpointUri(), discoveryResultRegistry.getCloudNumber());
 			}
-			
+
 			// output result
 
 			StringWriter writer = new StringWriter();
 			StringWriter writer2 = new StringWriter();
 
-			if (discoveryResult1 != null) {
-				
+			if (discoveryResultRegistry != null) {
+
 				writer.write("Information from registry:\n\n");
-			
-				writer.write("Cloud Number: " + discoveryResult1.getCloudNumber() + "\n");
-				writer.write("XDI Endpoint URI: " + discoveryResult1.getXdiEndpointUri() + "\n");
-				writer.write("Public Key: " + discoveryResult1.getPublicKey() + "\n");
-				writer.write("Services: " + discoveryResult1.getServices() + "\n");
+
+				writer.write("Cloud Number: " + discoveryResultRegistry.getCloudNumber() + "\n");
+				writer.write("XDI Endpoint URI: " + discoveryResultRegistry.getXdiEndpointUri() + "\n");
+				writer.write("Signature Public Key: " + discoveryResultRegistry.getSignaturePublicKey() + "\n");
+				writer.write("Encryption Public Key: " + discoveryResultRegistry.getEncryptionPublicKey() + "\n");
+				writer.write("Services: " + discoveryResultRegistry.getServices() + "\n");
 			} else {
-				
+
 				writer.write("No discovery result from registry.\n");
 			}
 
-			if (discoveryResult2 != null) {
-				
+			if (discoveryResultAuthority != null) {
+
 				writer2.write("Information from authority:\n\n");
-			
-				writer2.write("Cloud Number: " + discoveryResult2.getCloudNumber() + "\n");
-				writer2.write("XDI Endpoint URI: " + discoveryResult2.getXdiEndpointUri() + "\n");
-				writer2.write("Public Key: " + discoveryResult2.getPublicKey() + "\n");
-				writer2.write("Services: " + discoveryResult2.getServices() + "\n");
+
+				writer2.write("Cloud Number: " + discoveryResultAuthority.getCloudNumber() + "\n");
+				writer2.write("XDI Endpoint URI: " + discoveryResultAuthority.getXdiEndpointUri() + "\n");
+				writer2.write("Signature Public Key: " + discoveryResultAuthority.getSignaturePublicKey() + "\n");
+				writer2.write("Encryption Public Key: " + discoveryResultAuthority.getEncryptionPublicKey() + "\n");
+				writer2.write("Services: " + discoveryResultAuthority.getServices() + "\n");
 			} else {
-				
+
 				writer2.write("No discovery result from authority.\n");
 			}
 
@@ -85,9 +87,9 @@ public class CommandDiscovery implements Command {
 
 		String stats = "";
 		stats += Long.toString(stop - start) + " ms time. ";
-		if (discoveryResult1 != null && discoveryResult1.getMessageResult() != null) stats += Long.toString(discoveryResult1.getMessageResult().getGraph().getRootContextNode().getAllStatementCount()) + " result statement(s) from registry. ";
-		if (discoveryResult2 != null && discoveryResult2.getMessageResult() != null) stats += Long.toString(discoveryResult2.getMessageResult().getGraph().getRootContextNode().getAllStatementCount()) + " result statement(s) from authority. ";
-		
+		if (discoveryResultRegistry != null && discoveryResultRegistry.getMessageResult() != null) stats += Long.toString(discoveryResultRegistry.getMessageResult().getGraph().getRootContextNode().getAllStatementCount()) + " result statement(s) from registry. ";
+		if (discoveryResultAuthority != null && discoveryResultAuthority.getMessageResult() != null) stats += Long.toString(discoveryResultAuthority.getMessageResult().getGraph().getRootContextNode().getAllStatementCount()) + " result statement(s) from authority. ";
+
 		System.out.println(stats);
 	}
 }

@@ -1,6 +1,7 @@
 package xdi2.tools.commands;
 
 import java.io.StringWriter;
+import java.util.Map;
 
 import xdi2.client.http.XDIHttpClient;
 import xdi2.core.xri3.XDI3Segment;
@@ -34,13 +35,13 @@ public class CommandDiscovery implements Command {
 
 			// from registry
 
-			discoveryResultRegistry = discoveryClient.discoverFromRegistry(XDI3Segment.create(address));
+			discoveryResultRegistry = discoveryClient.discoverFromRegistry(XDI3Segment.create(address), null);
 
 			// from authority
 
 			if (discoveryResultRegistry != null && discoveryResultRegistry.getXdiEndpointUri() != null) {
 
-				discoveryResultAuthority = discoveryClient.discoverFromAuthority(discoveryResultRegistry.getXdiEndpointUri(), discoveryResultRegistry.getCloudNumber());
+				discoveryResultAuthority = discoveryClient.discoverFromAuthority(discoveryResultRegistry.getXdiEndpointUri(), discoveryResultRegistry.getCloudNumber(), null);
 			}
 
 			// output result
@@ -56,7 +57,19 @@ public class CommandDiscovery implements Command {
 				writer.write("XDI Endpoint URI: " + discoveryResultRegistry.getXdiEndpointUri() + "\n");
 				writer.write("Signature Public Key: " + discoveryResultRegistry.getSignaturePublicKey() + "\n");
 				writer.write("Encryption Public Key: " + discoveryResultRegistry.getEncryptionPublicKey() + "\n");
-				writer.write("Services: " + discoveryResultRegistry.getServices() + "\n");
+
+				if (discoveryResultRegistry.getEndpointUris().isEmpty()) {
+
+					writer.write("Services: (none)\n");
+				} else {
+
+					for (Map.Entry<XDI3Segment, String> endpointUri : discoveryResultRegistry.getEndpointUris().entrySet()) {
+
+						writer.write("Service " + endpointUri.getKey() + ": " + endpointUri.getValue() + "\n");
+					}
+				}
+
+				writer.write("\n");
 			} else {
 
 				writer.write("No discovery result from registry.\n");
@@ -70,7 +83,19 @@ public class CommandDiscovery implements Command {
 				writer2.write("XDI Endpoint URI: " + discoveryResultAuthority.getXdiEndpointUri() + "\n");
 				writer2.write("Signature Public Key: " + discoveryResultAuthority.getSignaturePublicKey() + "\n");
 				writer2.write("Encryption Public Key: " + discoveryResultAuthority.getEncryptionPublicKey() + "\n");
-				writer2.write("Services: " + discoveryResultAuthority.getServices() + "\n");
+
+				if (discoveryResultAuthority.getEndpointUris().isEmpty()) {
+
+					writer2.write("Services: (none)\n");
+				} else {
+
+					for (Map.Entry<XDI3Segment, String> endpointUri : discoveryResultAuthority.getEndpointUris().entrySet()) {
+
+						writer2.write("Service " + endpointUri.getKey() + ": " + endpointUri.getValue() + "\n");
+					}
+				}
+
+				writer2.write("\n");
 			} else {
 
 				writer2.write("No discovery result from authority.\n");

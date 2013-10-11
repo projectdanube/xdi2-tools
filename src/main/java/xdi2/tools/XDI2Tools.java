@@ -10,10 +10,13 @@ import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
 import xdi2.tools.commands.Command;
 import xdi2.tools.commands.CommandDiscovery;
+import xdi2.tools.commands.CommandDumpGraph;
 import xdi2.tools.commands.CommandGenerateDigestSecretToken;
 import xdi2.tools.commands.CommandListClassLoaders;
 import xdi2.tools.commands.CommandListGraphs;
 import xdi2.tools.commands.CommandListPlugins;
+import xdi2.tools.commands.CommandMessageGraph;
+import xdi2.tools.commands.CommandMessageGraphs;
 import xdi2.tools.commands.CommandMigrateGraphs;
 
 public class XDI2Tools {
@@ -22,8 +25,11 @@ public class XDI2Tools {
 		new CommandListPlugins(),
 		new CommandListClassLoaders(),
 		new CommandListGraphs(),
-		new CommandDiscovery(),
+		new CommandDumpGraph(),
+		new CommandMessageGraph(),
+		new CommandMessageGraphs(),
 		new CommandMigrateGraphs(),
+		new CommandDiscovery(),
 		new CommandGenerateDigestSecretToken()
 	};
 

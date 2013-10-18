@@ -16,6 +16,7 @@ import xdi2.tools.commands.CommandListClassLoaders;
 import xdi2.tools.commands.CommandListMessagingTargetFactorys;
 import xdi2.tools.commands.CommandListMessagingTargets;
 import xdi2.tools.commands.CommandListPlugins;
+import xdi2.tools.commands.CommandMaintenance;
 import xdi2.tools.commands.CommandMessageGraph;
 import xdi2.tools.commands.CommandMessageGraphs;
 import xdi2.tools.commands.CommandMigrateGraphs;
@@ -32,7 +33,8 @@ public class XDI2Tools {
 		new CommandMessageGraphs(),
 		new CommandMigrateGraphs(),
 		new CommandDiscovery(),
-		new CommandGenerateDigestSecretToken()
+		new CommandGenerateDigestSecretToken(),
+		new CommandMaintenance()
 	};
 
 	public static void main(String... args) throws Exception {

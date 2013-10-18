@@ -23,7 +23,7 @@ public class CommandMaintenance extends AbstractGraphsCommand<Object> implements
 	@Override
 	public void execute(String[] commandArgs) throws Exception {
 
-		String applicationContextPath = commandArgs.length > 2 ? commandArgs[2] : null;
+		String applicationContextPath = commandArgs.length > 0 ? commandArgs[0] : null;
 
 		if (applicationContextPath == null) applicationContextPath = DEFAULT_APPLICATIONCONTEXTPATH;
 

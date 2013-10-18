@@ -9,6 +9,7 @@ import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
 import xdi2.tools.commands.Command;
+import xdi2.tools.commands.CommandBackupGraphs;
 import xdi2.tools.commands.CommandDiscovery;
 import xdi2.tools.commands.CommandDumpGraph;
 import xdi2.tools.commands.CommandGenerateDigestSecretToken;
@@ -20,7 +21,7 @@ import xdi2.tools.commands.CommandMaintenance;
 import xdi2.tools.commands.CommandMessageGraph;
 import xdi2.tools.commands.CommandMessageGraphs;
 import xdi2.tools.commands.CommandMigrateGraphs;
-import xdi2.tools.commands.CommandBackupGraphs;
+import xdi2.tools.commands.CommandRestoreGraphs;
 
 public class XDI2Tools {
 
@@ -31,6 +32,7 @@ public class XDI2Tools {
 		new CommandListMessagingTargets(),
 		new CommandDumpGraph(),
 		new CommandBackupGraphs(),
+		new CommandRestoreGraphs(),
 		new CommandMessageGraph(),
 		new CommandMessageGraphs(),
 		new CommandMigrateGraphs(),

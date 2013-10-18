@@ -45,6 +45,8 @@ public class CommandBackupGraphs extends AbstractGraphsCommand<CommandBackupGrap
 		ZipEntry zipEntry = new ZipEntry(zipEntryName);
 		state.zipOutputStream.putNextEntry(zipEntry);
 
+		System.out.println("Backing up graph " + messagingTargetPath + ".");
+
 		XDIWriter writer = state.mimeType == null ? XDIWriterRegistry.getDefault() : XDIWriterRegistry.forMimeType(new MimeType(state.mimeType));
 
 		writer.write(graph, state.zipOutputStream);

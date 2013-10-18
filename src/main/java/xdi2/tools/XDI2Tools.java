@@ -20,7 +20,7 @@ import xdi2.tools.commands.CommandMaintenance;
 import xdi2.tools.commands.CommandMessageGraph;
 import xdi2.tools.commands.CommandMessageGraphs;
 import xdi2.tools.commands.CommandMigrateGraphs;
-import xdi2.tools.commands.CommandZipGraphs;
+import xdi2.tools.commands.CommandBackupGraphs;
 
 public class XDI2Tools {
 
@@ -30,7 +30,7 @@ public class XDI2Tools {
 		new CommandListMessagingTargetFactorys(),
 		new CommandListMessagingTargets(),
 		new CommandDumpGraph(),
-		new CommandZipGraphs(),
+		new CommandBackupGraphs(),
 		new CommandMessageGraph(),
 		new CommandMessageGraphs(),
 		new CommandMigrateGraphs(),

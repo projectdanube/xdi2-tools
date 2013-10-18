@@ -14,10 +14,10 @@ import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
 
-@CommandName("zip-graphs")
+@CommandName("backup-graphs")
 @CommandUsage("filename [mime-type] [path-to-applicationContext.xml]")
 @CommandArgs(min=1,max=3)
-public class CommandZipGraphs extends AbstractGraphsCommand<CommandZipGraphs.MyState> implements Command {
+public class CommandBackupGraphs extends AbstractGraphsCommand<CommandBackupGraphs.MyState> implements Command {
 
 	public static final String DEFAULT_APPLICATIONCONTEXTPATH = "applicationContext.xml";
 
@@ -39,7 +39,10 @@ public class CommandZipGraphs extends AbstractGraphsCommand<CommandZipGraphs.MyS
 
 	protected void callbackGraph(String messagingTargetPath, Graph graph, MyState state) throws Xdi2MessagingException, IOException {
 
-		ZipEntry zipEntry = new ZipEntry(messagingTargetPath + ".xdi");
+		String zipEntryName = messagingTargetPath + ".xdi";
+		if (zipEntryName.startsWith("/")) zipEntryName = zipEntryName.substring(1);
+
+		ZipEntry zipEntry = new ZipEntry(zipEntryName);
 		state.zipOutputStream.putNextEntry(zipEntry);
 
 		XDIWriter writer = state.mimeType == null ? XDIWriterRegistry.getDefault() : XDIWriterRegistry.forMimeType(new MimeType(state.mimeType));

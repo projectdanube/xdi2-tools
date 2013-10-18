@@ -13,7 +13,7 @@ import xdi2.tools.commands.CommandDiscovery;
 import xdi2.tools.commands.CommandDumpGraph;
 import xdi2.tools.commands.CommandGenerateDigestSecretToken;
 import xdi2.tools.commands.CommandListClassLoaders;
-import xdi2.tools.commands.CommandListGraphs;
+import xdi2.tools.commands.CommandListMessagingTargets;
 import xdi2.tools.commands.CommandListPlugins;
 import xdi2.tools.commands.CommandMessageGraph;
 import xdi2.tools.commands.CommandMessageGraphs;
@@ -24,7 +24,7 @@ public class XDI2Tools {
 	private final static Command[] commands = new Command[] {
 		new CommandListPlugins(),
 		new CommandListClassLoaders(),
-		new CommandListGraphs(),
+		new CommandListMessagingTargets(),
 		new CommandDumpGraph(),
 		new CommandMessageGraph(),
 		new CommandMessageGraphs(),

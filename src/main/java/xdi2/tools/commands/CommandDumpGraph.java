@@ -1,15 +1,12 @@
 package xdi2.tools.commands;
 
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import java.io.IOException;
 
 import xdi2.core.Graph;
 import xdi2.core.io.MimeType;
 import xdi2.core.io.XDIWriter;
 import xdi2.core.io.XDIWriterRegistry;
-import xdi2.messaging.target.MessagingTarget;
-import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
-import xdi2.server.factory.MessagingTargetFactory;
-import xdi2.server.registry.HttpEndpointRegistry;
+import xdi2.messaging.exceptions.Xdi2MessagingException;
 import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
@@ -17,7 +14,7 @@ import xdi2.tools.annotations.CommandUsage;
 @CommandName("dump-graph")
 @CommandUsage("request-path [mime-type] [path-to-applicationContext.xml]")
 @CommandArgs(min=1,max=3)
-public class CommandDumpGraph implements Command {
+public class CommandDumpGraph extends AbstractGraphCommand<CommandDumpGraph.MyState> implements Command {
 
 	public static final String DEFAULT_APPLICATIONCONTEXTPATH = "applicationContext.xml";
 
@@ -30,35 +27,23 @@ public class CommandDumpGraph implements Command {
 
 		if (applicationContextPath == null) applicationContextPath = DEFAULT_APPLICATIONCONTEXTPATH;
 
-		HttpEndpointRegistry httpEndpointRegistry = CommandUtil.getHttpEndpointRegistry(applicationContextPath);
-		if (httpEndpointRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'HttpEndpointRegistry' not found in " + applicationContextPath);
+		this.commandGraph(applicationContextPath, requestPath, new MyState(mimeType));
+	}
 
-		String messagingTargetPath = httpEndpointRegistry.findMessagingTargetPath(requestPath);
-		MessagingTarget messagingTarget = messagingTargetPath == null ? null : httpEndpointRegistry.getMessagingTarget(messagingTargetPath);
-		
-		if (messagingTarget == null) {
-			
-			String messagingTargetFactoryPath = httpEndpointRegistry.findMessagingTargetFactoryPath(requestPath);
-			MessagingTargetFactory messagingTargetFactory = messagingTargetFactoryPath == null ? null : httpEndpointRegistry.getMessagingTargetFactory(messagingTargetFactoryPath);
-			messagingTarget = messagingTargetFactory == null ? null : messagingTargetFactory.mountMessagingTarget(httpEndpointRegistry, messagingTargetFactoryPath, requestPath);
-		}
-		
-		if (messagingTarget == null) {
-			
-			System.out.println("No messaging target found at request path " + requestPath);
-			return;
-		}
-		
-		Graph graph = messagingTarget instanceof GraphMessagingTarget ? ((GraphMessagingTarget) messagingTarget).getGraph() : null;
-		
-		if (graph == null) {
-			
-			System.out.println("Messaging target at request path " + requestPath + " has no graph.");
-			return;
-		}
+	protected void callbackGraph(String messagingTargetPath, Graph graph, MyState state) throws Xdi2MessagingException, IOException {
 
-		XDIWriter writer = mimeType == null ? XDIWriterRegistry.getDefault() : XDIWriterRegistry.forMimeType(new MimeType(mimeType));
+		XDIWriter writer = state.mimeType == null ? XDIWriterRegistry.getDefault() : XDIWriterRegistry.forMimeType(new MimeType(state.mimeType));
 
 		writer.write(graph, System.out);
+	}
+
+	public class MyState {
+
+		private String mimeType;
+
+		public MyState(String mimeType) {
+
+			this.mimeType = mimeType;
+		}
 	}
 }

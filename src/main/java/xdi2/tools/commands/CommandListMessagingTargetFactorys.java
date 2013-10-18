@@ -29,7 +29,7 @@ public class CommandListMessagingTargetFactorys extends AbstractMessagingTargetF
 
 		StringBuilder buffer = new StringBuilder();
 
-		buffer.append(messagingTargetFactoryPath + " --> " + messagingTargetFactory.getClass().getSimpleName());
+		buffer.append(messagingTargetFactoryPath + " ==> " + messagingTargetFactory.getClass().getSimpleName());
 
 		System.out.println(buffer.toString());
 	}

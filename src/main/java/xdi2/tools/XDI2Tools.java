@@ -9,28 +9,36 @@ import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
 import xdi2.tools.commands.Command;
+import xdi2.tools.commands.CommandBackupGraphs;
 import xdi2.tools.commands.CommandDiscovery;
 import xdi2.tools.commands.CommandDumpGraph;
 import xdi2.tools.commands.CommandGenerateDigestSecretToken;
 import xdi2.tools.commands.CommandListClassLoaders;
-import xdi2.tools.commands.CommandListGraphs;
+import xdi2.tools.commands.CommandListMessagingTargetFactorys;
+import xdi2.tools.commands.CommandListMessagingTargets;
 import xdi2.tools.commands.CommandListPlugins;
+import xdi2.tools.commands.CommandMaintenance;
 import xdi2.tools.commands.CommandMessageGraph;
 import xdi2.tools.commands.CommandMessageGraphs;
 import xdi2.tools.commands.CommandMigrateGraphs;
+import xdi2.tools.commands.CommandRestoreGraphs;
 
 public class XDI2Tools {
 
 	private final static Command[] commands = new Command[] {
 		new CommandListPlugins(),
 		new CommandListClassLoaders(),
-		new CommandListGraphs(),
+		new CommandListMessagingTargetFactorys(),
+		new CommandListMessagingTargets(),
 		new CommandDumpGraph(),
+		new CommandBackupGraphs(),
+		new CommandRestoreGraphs(),
 		new CommandMessageGraph(),
 		new CommandMessageGraphs(),
 		new CommandMigrateGraphs(),
 		new CommandDiscovery(),
-		new CommandGenerateDigestSecretToken()
+		new CommandGenerateDigestSecretToken(),
+		new CommandMaintenance()
 	};
 
 	public static void main(String... args) throws Exception {

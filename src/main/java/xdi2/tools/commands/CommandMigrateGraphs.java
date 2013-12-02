@@ -13,7 +13,7 @@ import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
 import xdi2.server.exceptions.Xdi2ServerException;
 import xdi2.server.factory.MessagingTargetFactory;
 import xdi2.server.factory.impl.RegistryGraphMessagingTargetFactory;
-import xdi2.server.registry.HttpEndpointRegistry;
+import xdi2.server.registry.HttpMessagingTargetRegistry;
 import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
@@ -38,34 +38,34 @@ public class CommandMigrateGraphs implements Command {
 			return;
 		}
 
-		HttpEndpointRegistry inputHttpEndpointRegistry = CommandUtil.getHttpEndpointRegistry(inputApplicationContextPath);
-		HttpEndpointRegistry outputHttpEndpointRegistry = CommandUtil.getHttpEndpointRegistry(outputApplicationContextPath);
-		if (inputHttpEndpointRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'HttpEndpointRegistry' not found in " + inputApplicationContextPath);
-		if (outputHttpEndpointRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'HttpEndpointRegistry' not found in " + outputApplicationContextPath);
+		HttpMessagingTargetRegistry inputHttpMessagingTargetRegistry = CommandUtil.getHttpMessagingTargetRegistry(inputApplicationContextPath);
+		HttpMessagingTargetRegistry outputHttpMessagingTargetRegistry = CommandUtil.getHttpMessagingTargetRegistry(outputApplicationContextPath);
+		if (inputHttpMessagingTargetRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'HttpMessagingTargetRegistry' not found in " + inputApplicationContextPath);
+		if (outputHttpMessagingTargetRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'HttpMessagingTargetRegistry' not found in " + outputApplicationContextPath);
 
-		migrateMessagingTargets(inputHttpEndpointRegistry, outputHttpEndpointRegistry);
-		migrateMessagingTargetFactorys(inputHttpEndpointRegistry, outputHttpEndpointRegistry);
+		migrateMessagingTargets(inputHttpMessagingTargetRegistry, outputHttpMessagingTargetRegistry);
+		migrateMessagingTargetFactorys(inputHttpMessagingTargetRegistry, outputHttpMessagingTargetRegistry);
 	}
 
-	private static void migrateMessagingTargets(HttpEndpointRegistry inputHttpEndpointRegistry, HttpEndpointRegistry outputHttpEndpointRegistry) {
+	private static void migrateMessagingTargets(HttpMessagingTargetRegistry inputHttpMessagingTargetRegistry, HttpMessagingTargetRegistry outputHttpMessagingTargetRegistry) {
 
-		for (String messagingTargetPath : inputHttpEndpointRegistry.getMessagingTargetPaths()) {
+		for (String messagingTargetPath : inputHttpMessagingTargetRegistry.getMessagingTargetPaths()) {
 
-			MessagingTarget inputMessagingTarget = inputHttpEndpointRegistry.getMessagingTarget(messagingTargetPath);
-			MessagingTarget outputMessagingTarget = outputHttpEndpointRegistry.getMessagingTarget(messagingTargetPath);
+			MessagingTarget inputMessagingTarget = inputHttpMessagingTargetRegistry.getMessagingTarget(messagingTargetPath);
+			MessagingTarget outputMessagingTarget = outputHttpMessagingTargetRegistry.getMessagingTarget(messagingTargetPath);
 
 			migrateMessagingTarget(messagingTargetPath, inputMessagingTarget, outputMessagingTarget);
 		}
 	}
 
-	private static void migrateMessagingTargetFactorys(HttpEndpointRegistry inputHttpEndpointRegistry, HttpEndpointRegistry outputHttpEndpointRegistry) throws Xdi2ServerException, Xdi2MessagingException {
+	private static void migrateMessagingTargetFactorys(HttpMessagingTargetRegistry inputHttpMessagingTargetRegistry, HttpMessagingTargetRegistry outputHttpMessagingTargetRegistry) throws Xdi2ServerException, Xdi2MessagingException {
 
-		for (String messagingTargetFactoryPath : inputHttpEndpointRegistry.getMessagingTargetFactoryPaths()) {
+		for (String messagingTargetFactoryPath : inputHttpMessagingTargetRegistry.getMessagingTargetFactoryPaths()) {
 
-			MessagingTargetFactory inputMessagingTargetFactory = inputHttpEndpointRegistry.getMessagingTargetFactory(messagingTargetFactoryPath);
-			MessagingTargetFactory outputMessagingTargetFactory = outputHttpEndpointRegistry.getMessagingTargetFactory(messagingTargetFactoryPath);
+			MessagingTargetFactory inputMessagingTargetFactory = inputHttpMessagingTargetRegistry.getMessagingTargetFactory(messagingTargetFactoryPath);
+			MessagingTargetFactory outputMessagingTargetFactory = outputHttpMessagingTargetRegistry.getMessagingTargetFactory(messagingTargetFactoryPath);
 
-			migrateMessagingTargetFactory(messagingTargetFactoryPath, inputMessagingTargetFactory, outputMessagingTargetFactory, inputHttpEndpointRegistry, outputHttpEndpointRegistry);
+			migrateMessagingTargetFactory(messagingTargetFactoryPath, inputMessagingTargetFactory, outputMessagingTargetFactory, inputHttpMessagingTargetRegistry, outputHttpMessagingTargetRegistry);
 		}
 	}
 
@@ -86,7 +86,7 @@ public class CommandMigrateGraphs implements Command {
 		System.out.println("At path " + messagingTargetPath + " copied " + inputGraph.getRootContextNode().getAllStatementCount() + " statements from " + inputGraph.getClass().getSimpleName() + " to " + outputGraph.getRootContextNode().getAllStatementCount() + " statements in " + outputGraph.getClass().getSimpleName());
 	}
 
-	private static void migrateMessagingTargetFactory(String messagingTargetFactoryPath, MessagingTargetFactory inputMessagingTargetFactory, MessagingTargetFactory outputMessagingTargetFactory, HttpEndpointRegistry inputHttpEndpointRegistry, HttpEndpointRegistry outputHttpEndpointRegistry) throws Xdi2ServerException, Xdi2MessagingException {
+	private static void migrateMessagingTargetFactory(String messagingTargetFactoryPath, MessagingTargetFactory inputMessagingTargetFactory, MessagingTargetFactory outputMessagingTargetFactory, HttpMessagingTargetRegistry inputHttpMessagingTargetRegistry, HttpMessagingTargetRegistry outputHttpMessagingTargetRegistry) throws Xdi2ServerException, Xdi2MessagingException {
 
 		if (inputMessagingTargetFactory == null || ! (inputMessagingTargetFactory instanceof RegistryGraphMessagingTargetFactory)) return;
 		if (outputMessagingTargetFactory == null || ! (outputMessagingTargetFactory instanceof RegistryGraphMessagingTargetFactory)) return;
@@ -101,13 +101,13 @@ public class CommandMigrateGraphs implements Command {
 			String requestPath = requestPaths.next();
 			String messagingTargetPath = requestPath;
 
-			MessagingTarget inputMessagingTarget = inputMessagingTargetFactory.mountMessagingTarget(inputHttpEndpointRegistry, messagingTargetFactoryPath, requestPath);
-			MessagingTarget outputMessagingTarget = outputMessagingTargetFactory.mountMessagingTarget(outputHttpEndpointRegistry, messagingTargetFactoryPath, requestPath);
+			MessagingTarget inputMessagingTarget = inputMessagingTargetFactory.mountMessagingTarget(inputHttpMessagingTargetRegistry, messagingTargetFactoryPath, requestPath);
+			MessagingTarget outputMessagingTarget = outputMessagingTargetFactory.mountMessagingTarget(outputHttpMessagingTargetRegistry, messagingTargetFactoryPath, requestPath);
 
 			migrateMessagingTarget(messagingTargetPath, inputMessagingTarget, outputMessagingTarget);
 
-			inputHttpEndpointRegistry.unmountMessagingTarget(inputMessagingTarget);
-			outputHttpEndpointRegistry.unmountMessagingTarget(outputMessagingTarget);
+			inputHttpMessagingTargetRegistry.unmountMessagingTarget(inputMessagingTarget);
+			outputHttpMessagingTargetRegistry.unmountMessagingTarget(outputMessagingTarget);
 		}
 
 		System.out.println("At path " + messagingTargetFactoryPath + " migrated from " + inputMessagingTargetFactory.getClass().getSimpleName() + " to " + outputMessagingTargetFactory.getClass().getSimpleName());

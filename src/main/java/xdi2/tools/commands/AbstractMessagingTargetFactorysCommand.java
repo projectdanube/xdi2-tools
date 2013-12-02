@@ -3,23 +3,23 @@ package xdi2.tools.commands;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import xdi2.server.factory.MessagingTargetFactory;
-import xdi2.server.registry.HttpEndpointRegistry;
+import xdi2.server.registry.HttpMessagingTargetRegistry;
 
 public abstract class AbstractMessagingTargetFactorysCommand <T> implements Command {
 
 	protected void commandMessagingTargetFactorys(String applicationContextPath, T state) throws Exception {
 
-		HttpEndpointRegistry httpEndpointRegistry = CommandUtil.getHttpEndpointRegistry(applicationContextPath);
-		if (httpEndpointRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'HttpEndpointRegistry' not found in " + applicationContextPath);
+		HttpMessagingTargetRegistry httpMessagingTargetRegistry = CommandUtil.getHttpMessagingTargetRegistry(applicationContextPath);
+		if (httpMessagingTargetRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'HttpMessagingTargetRegistry' not found in " + applicationContextPath);
 
-		for (String messagingTargetFactoryPath : httpEndpointRegistry.getMessagingTargetFactoryPaths()) {
+		for (String messagingTargetFactoryPath : httpMessagingTargetRegistry.getMessagingTargetFactoryPaths()) {
 
-			MessagingTargetFactory messagingTargetFactory = httpEndpointRegistry.getMessagingTargetFactory(messagingTargetFactoryPath);
+			MessagingTargetFactory messagingTargetFactory = httpMessagingTargetRegistry.getMessagingTargetFactory(messagingTargetFactoryPath);
 			if (messagingTargetFactory == null) continue;
 
-			this.callbackMessagingTargetFactory(messagingTargetFactoryPath, messagingTargetFactory, httpEndpointRegistry, state);
+			this.callbackMessagingTargetFactory(messagingTargetFactoryPath, messagingTargetFactory, httpMessagingTargetRegistry, state);
 		}
 	}
 
-	protected abstract void callbackMessagingTargetFactory(String messagingTargetFactoryPath, MessagingTargetFactory messagingTargetFactory, HttpEndpointRegistry httpEndpointRegistry, T state) throws Exception;
+	protected abstract void callbackMessagingTargetFactory(String messagingTargetFactoryPath, MessagingTargetFactory messagingTargetFactory, HttpMessagingTargetRegistry httpMessagingTargetRegistry, T state) throws Exception;
 }

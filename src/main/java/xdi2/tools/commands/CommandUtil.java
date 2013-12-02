@@ -9,11 +9,11 @@ import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
-import xdi2.server.registry.HttpEndpointRegistry;
+import xdi2.server.registry.HttpMessagingTargetRegistry;
 
 public class CommandUtil {
 
-	public static HttpEndpointRegistry getHttpEndpointRegistry(String applicationContextPath) throws IOException {
+	public static HttpMessagingTargetRegistry getHttpMessagingTargetRegistry(String applicationContextPath) throws IOException {
 
 		File applicationContextFile = new File(applicationContextPath);
 		if (! applicationContextFile.exists()) throw new FileNotFoundException(applicationContextPath + " not found");
@@ -21,7 +21,7 @@ public class CommandUtil {
 		Resource applicationContextResource = new FileSystemResource(applicationContextFile);
 		ApplicationContext applicationContext = makeApplicationContext(applicationContextResource);
 
-		return (HttpEndpointRegistry) applicationContext.getBean("HttpEndpointRegistry");
+		return (HttpMessagingTargetRegistry) applicationContext.getBean("HttpMessagingTargetRegistry");
 	}
 
 	private static ApplicationContext makeApplicationContext(Resource... resources) {

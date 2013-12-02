@@ -3,7 +3,7 @@ package xdi2.tools.commands;
 import xdi2.messaging.target.MessagingTarget;
 import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
 import xdi2.server.factory.MessagingTargetFactory;
-import xdi2.server.registry.HttpEndpointRegistry;
+import xdi2.server.registry.HttpMessagingTargetRegistry;
 import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
@@ -25,7 +25,7 @@ public class CommandListMessagingTargets extends AbstractMessagingTargetsCommand
 		this.commandMessagingTargets(applicationContextPath, null);
 	}
 
-	protected void callbackMessagingTarget(String messagingTargetPath, MessagingTarget messagingTarget, HttpEndpointRegistry httpEndpointRegistry, Object state) {
+	protected void callbackMessagingTarget(String messagingTargetPath, MessagingTarget messagingTarget, HttpMessagingTargetRegistry httpMessagingTargetRegistry, Object state) {
 
 		StringBuilder buffer = new StringBuilder();
 
@@ -39,7 +39,7 @@ public class CommandListMessagingTargets extends AbstractMessagingTargetsCommand
 		System.out.println(buffer.toString());
 	}
 
-	protected void callbackMessagingTargetFactory(String messagingTargetFactoryPath, MessagingTargetFactory messagingTargetFactory, HttpEndpointRegistry httpEndpointRegistry, Object state) throws Exception {
+	protected void callbackMessagingTargetFactory(String messagingTargetFactoryPath, MessagingTargetFactory messagingTargetFactory, HttpMessagingTargetRegistry httpMessagingTargetRegistry, Object state) throws Exception {
 
 		StringBuilder buffer = new StringBuilder();
 
@@ -47,6 +47,6 @@ public class CommandListMessagingTargets extends AbstractMessagingTargetsCommand
 
 		System.out.println(buffer.toString());
 
-		super.callbackMessagingTargetFactory(messagingTargetFactoryPath, messagingTargetFactory, httpEndpointRegistry, state);
+		super.callbackMessagingTargetFactory(messagingTargetFactoryPath, messagingTargetFactory, httpMessagingTargetRegistry, state);
 	}
 }

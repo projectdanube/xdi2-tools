@@ -3,7 +3,7 @@ package xdi2.tools.commands;
 import xdi2.messaging.exceptions.Xdi2MessagingException;
 import xdi2.server.exceptions.Xdi2ServerException;
 import xdi2.server.factory.MessagingTargetFactory;
-import xdi2.server.registry.HttpEndpointRegistry;
+import xdi2.server.registry.HttpMessagingTargetRegistry;
 import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
@@ -25,7 +25,7 @@ public class CommandListMessagingTargetFactorys extends AbstractMessagingTargetF
 		this.commandMessagingTargetFactorys(applicationContextPath, null);
 	}
 
-	protected void callbackMessagingTargetFactory(String messagingTargetFactoryPath, MessagingTargetFactory messagingTargetFactory, HttpEndpointRegistry httpEndpointRegistry, Object state) throws Xdi2ServerException, Xdi2MessagingException {
+	protected void callbackMessagingTargetFactory(String messagingTargetFactoryPath, MessagingTargetFactory messagingTargetFactory, HttpMessagingTargetRegistry httpMessagingTargetRegistry, Object state) throws Xdi2ServerException, Xdi2MessagingException {
 
 		StringBuilder buffer = new StringBuilder();
 

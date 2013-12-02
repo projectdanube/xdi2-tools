@@ -33,6 +33,7 @@ public class CommandRestoreGraphs extends AbstractGraphsCommand<CommandRestoreGr
 		zipFile.close();
 	}
 
+	@Override
 	protected void callbackGraph(String messagingTargetPath, Graph graph, MyState state) throws Exception {
 
 		String zipEntryName = messagingTargetPath + ".xdi";

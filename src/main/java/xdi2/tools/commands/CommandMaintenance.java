@@ -30,6 +30,7 @@ public class CommandMaintenance extends AbstractGraphsCommand<Object> implements
 		this.commandGraphs(applicationContextPath, null);
 	}
 
+	@Override
 	protected void callbackGraph(String messagingTargetPath, Graph graph, Object state) throws Xdi2MessagingException, IOException {
 
 		XDI3Segment x = XdiLocalRoot.findLocalRoot(graph).getSelfPeerRoot().getXriOfPeerRoot();

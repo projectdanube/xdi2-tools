@@ -25,6 +25,7 @@ public class CommandListMessagingTargets extends AbstractMessagingTargetsCommand
 		this.commandMessagingTargets(applicationContextPath, null);
 	}
 
+	@Override
 	protected void callbackMessagingTarget(String messagingTargetPath, MessagingTarget messagingTarget, HttpMessagingTargetRegistry httpMessagingTargetRegistry, Object state) {
 
 		StringBuilder buffer = new StringBuilder();
@@ -39,6 +40,7 @@ public class CommandListMessagingTargets extends AbstractMessagingTargetsCommand
 		System.out.println(buffer.toString());
 	}
 
+	@Override
 	protected void callbackMessagingTargetFactory(String messagingTargetFactoryPath, MessagingTargetFactory messagingTargetFactory, HttpMessagingTargetRegistry httpMessagingTargetRegistry, Object state) throws Exception {
 
 		StringBuilder buffer = new StringBuilder();

@@ -25,6 +25,7 @@ public class CommandListMessagingTargetFactorys extends AbstractMessagingTargetF
 		this.commandMessagingTargetFactorys(applicationContextPath, null);
 	}
 
+	@Override
 	protected void callbackMessagingTargetFactory(String messagingTargetFactoryPath, MessagingTargetFactory messagingTargetFactory, HttpMessagingTargetRegistry httpMessagingTargetRegistry, Object state) throws Xdi2ServerException, Xdi2MessagingException {
 
 		StringBuilder buffer = new StringBuilder();

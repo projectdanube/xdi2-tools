@@ -37,6 +37,7 @@ public class CommandBackupGraphs extends AbstractGraphsCommand<CommandBackupGrap
 		zipOutputStream.close();
 	}
 
+	@Override
 	protected void callbackGraph(String messagingTargetPath, Graph graph, MyState state) throws Xdi2MessagingException, IOException {
 
 		String zipEntryName = messagingTargetPath + ".xdi";

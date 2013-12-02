@@ -27,6 +27,7 @@ public abstract class AbstractMessagingTargetsCommand <T> extends AbstractMessag
 		this.commandMessagingTargetFactorys(applicationContextPath, state);
 	}
 
+	@Override
 	protected void callbackMessagingTargetFactory(String messagingTargetFactoryPath, MessagingTargetFactory messagingTargetFactory, HttpMessagingTargetRegistry httpMessagingTargetRegistry, T state) throws Exception {
 
 		if (! (messagingTargetFactory instanceof RegistryGraphMessagingTargetFactory)) return;

@@ -12,6 +12,7 @@ public abstract class AbstractGraphsCommand <T> extends AbstractMessagingTargets
 		this.commandMessagingTargets(applicationContextPath, state);
 	}
 
+	@Override
 	protected void callbackMessagingTarget(String messagingTargetPath, MessagingTarget messagingTarget, HttpMessagingTargetRegistry httpMessagingTargetRegistry, T state) throws Exception {
 
 		if (! (messagingTarget instanceof GraphMessagingTarget)) return;

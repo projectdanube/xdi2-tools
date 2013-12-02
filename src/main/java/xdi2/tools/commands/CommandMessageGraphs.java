@@ -41,6 +41,7 @@ public class CommandMessageGraphs extends AbstractGraphsCommand<CommandMessageGr
 		this.commandGraphs(applicationContextPath, new MyState(mimeType, operation, target));
 	}
 
+	@Override
 	protected void callbackGraph(String messagingTargetPath, Graph graph, MyState state) throws Xdi2MessagingException, IOException {
 
 		GraphMessagingTarget commandGraphMessagingTarget = new GraphMessagingTarget();

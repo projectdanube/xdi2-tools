@@ -30,6 +30,7 @@ public class CommandDumpGraph extends AbstractGraphCommand<CommandDumpGraph.MySt
 		this.commandGraph(applicationContextPath, requestPath, new MyState(mimeType));
 	}
 
+	@Override
 	protected void callbackGraph(String messagingTargetPath, Graph graph, MyState state) throws Xdi2MessagingException, IOException {
 
 		XDIWriter writer = state.mimeType == null ? XDIWriterRegistry.getDefault() : XDIWriterRegistry.forMimeType(new MimeType(state.mimeType));

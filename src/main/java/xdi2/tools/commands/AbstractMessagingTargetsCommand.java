@@ -4,6 +4,8 @@ import java.util.Iterator;
 
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
+import xdi2.core.util.iterators.MappingIterator;
+import xdi2.core.xri3.XDI3Segment;
 import xdi2.messaging.target.MessagingTarget;
 import xdi2.server.factory.MessagingTargetFactory;
 import xdi2.server.factory.impl.RegistryGraphMessagingTargetFactory;
@@ -28,11 +30,20 @@ public abstract class AbstractMessagingTargetsCommand <T> extends AbstractMessag
 	}
 
 	@Override
-	protected void callbackMessagingTargetFactory(String messagingTargetFactoryPath, MessagingTargetFactory messagingTargetFactory, HttpMessagingTargetRegistry httpMessagingTargetRegistry, T state) throws Exception {
+	protected void callbackMessagingTargetFactory(final String messagingTargetFactoryPath, final MessagingTargetFactory messagingTargetFactory, HttpMessagingTargetRegistry httpMessagingTargetRegistry, T state) throws Exception {
 
 		if (! (messagingTargetFactory instanceof RegistryGraphMessagingTargetFactory)) return;
 
-		Iterator<String> requestPaths = ((RegistryGraphMessagingTargetFactory) messagingTargetFactory).getRequestPaths(messagingTargetFactoryPath);
+		Iterator<XDI3Segment> ownerPeerRootXris = messagingTargetFactory.getOwnerPeerRootXris();
+
+		Iterator<String> requestPaths = new MappingIterator<XDI3Segment, String> (ownerPeerRootXris) {
+
+			@Override
+			public String map(XDI3Segment ownerPeerRootXri) {
+
+				return messagingTargetFactory.getRequestPath(messagingTargetFactoryPath, ownerPeerRootXri);
+			}
+		};
 
 		while (requestPaths.hasNext()) {
 

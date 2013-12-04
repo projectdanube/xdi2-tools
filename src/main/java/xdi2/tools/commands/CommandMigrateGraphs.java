@@ -7,6 +7,8 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import xdi2.core.Graph;
 import xdi2.core.impl.memory.MemoryGraphFactory;
 import xdi2.core.util.CopyUtil;
+import xdi2.core.util.iterators.MappingIterator;
+import xdi2.core.xri3.XDI3Segment;
 import xdi2.messaging.exceptions.Xdi2MessagingException;
 import xdi2.messaging.target.MessagingTarget;
 import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
@@ -86,7 +88,7 @@ public class CommandMigrateGraphs implements Command {
 		System.out.println("At path " + messagingTargetPath + " copied " + inputGraph.getRootContextNode().getAllStatementCount() + " statements from " + inputGraph.getClass().getSimpleName() + " to " + outputGraph.getRootContextNode().getAllStatementCount() + " statements in " + outputGraph.getClass().getSimpleName());
 	}
 
-	private static void migrateMessagingTargetFactory(String messagingTargetFactoryPath, MessagingTargetFactory inputMessagingTargetFactory, MessagingTargetFactory outputMessagingTargetFactory, HttpMessagingTargetRegistry inputHttpMessagingTargetRegistry, HttpMessagingTargetRegistry outputHttpMessagingTargetRegistry) throws Xdi2ServerException, Xdi2MessagingException {
+	private static void migrateMessagingTargetFactory(final String messagingTargetFactoryPath, final MessagingTargetFactory inputMessagingTargetFactory, MessagingTargetFactory outputMessagingTargetFactory, HttpMessagingTargetRegistry inputHttpMessagingTargetRegistry, HttpMessagingTargetRegistry outputHttpMessagingTargetRegistry) throws Xdi2ServerException, Xdi2MessagingException {
 
 		if (inputMessagingTargetFactory == null || ! (inputMessagingTargetFactory instanceof RegistryGraphMessagingTargetFactory)) return;
 		if (outputMessagingTargetFactory == null || ! (outputMessagingTargetFactory instanceof RegistryGraphMessagingTargetFactory)) return;
@@ -94,7 +96,16 @@ public class CommandMigrateGraphs implements Command {
 		if (! (((RegistryGraphMessagingTargetFactory) inputMessagingTargetFactory).getPrototypeMessagingTarget() instanceof GraphMessagingTarget)) return;
 		if (! (((RegistryGraphMessagingTargetFactory) outputMessagingTargetFactory).getPrototypeMessagingTarget() instanceof GraphMessagingTarget)) return;
 
-		Iterator<String> requestPaths = ((RegistryGraphMessagingTargetFactory) inputMessagingTargetFactory).getRequestPaths(messagingTargetFactoryPath);
+		Iterator<XDI3Segment> ownerPeerRootXris = inputMessagingTargetFactory.getOwnerPeerRootXris();
+
+		Iterator<String> requestPaths = new MappingIterator<XDI3Segment, String> (ownerPeerRootXris) {
+
+			@Override
+			public String map(XDI3Segment ownerPeerRootXri) {
+
+				return inputMessagingTargetFactory.getRequestPath(messagingTargetFactoryPath, ownerPeerRootXri);
+			}
+		};
 
 		while (requestPaths.hasNext()) {
 

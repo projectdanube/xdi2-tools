@@ -8,7 +8,7 @@ import xdi2.core.Graph;
 import xdi2.core.impl.memory.MemoryGraphFactory;
 import xdi2.core.util.CopyUtil;
 import xdi2.core.util.iterators.MappingIterator;
-import xdi2.core.xri3.XDI3Segment;
+import xdi2.core.xri3.XDI3SubSegment;
 import xdi2.messaging.exceptions.Xdi2MessagingException;
 import xdi2.messaging.target.MessagingTarget;
 import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
@@ -96,12 +96,12 @@ public class CommandMigrateGraphs implements Command {
 		if (! (((RegistryGraphMessagingTargetFactory) inputMessagingTargetFactory).getPrototypeMessagingTarget() instanceof GraphMessagingTarget)) return;
 		if (! (((RegistryGraphMessagingTargetFactory) outputMessagingTargetFactory).getPrototypeMessagingTarget() instanceof GraphMessagingTarget)) return;
 
-		Iterator<XDI3Segment> ownerPeerRootXris = inputMessagingTargetFactory.getOwnerPeerRootXris();
+		Iterator<XDI3SubSegment> ownerPeerRootXris = inputMessagingTargetFactory.getOwnerPeerRootXris();
 
-		Iterator<String> requestPaths = new MappingIterator<XDI3Segment, String> (ownerPeerRootXris) {
+		Iterator<String> requestPaths = new MappingIterator<XDI3SubSegment, String> (ownerPeerRootXris) {
 
 			@Override
-			public String map(XDI3Segment ownerPeerRootXri) {
+			public String map(XDI3SubSegment ownerPeerRootXri) {
 
 				return inputMessagingTargetFactory.getRequestPath(messagingTargetFactoryPath, ownerPeerRootXri);
 			}

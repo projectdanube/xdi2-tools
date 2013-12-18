@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import xdi2.core.Graph;
 import xdi2.core.Literal;
 import xdi2.core.features.nodetypes.XdiLocalRoot;
+import xdi2.core.util.GraphUtil;
 import xdi2.core.xri3.XDI3Segment;
 import xdi2.core.xri3.XDI3Statement;
 import xdi2.messaging.exceptions.Xdi2MessagingException;
@@ -33,15 +34,6 @@ public class CommandMaintenance extends AbstractGraphsCommand<Object> implements
 	@Override
 	protected void callbackGraph(String messagingTargetPath, Graph graph, Object state) throws Xdi2MessagingException, IOException {
 
-		XDI3Segment x = XdiLocalRoot.findLocalRoot(graph).getSelfPeerRoot().getXriOfPeerRoot();
-
-		String uri = "http://mycloud.neustar.biz:8080/myapp/personalclouds/" + URLEncoder.encode(x.toString(), "UTF-8") + "/connect/request";
-
-		graph.setStatement(XDI3Statement.create("$public$do/$get/$https$connect$xdi<$uri>"));
-		graph.setStatement(XDI3Statement.create("$public$do/$get/$msg$encrypt$keypair$public<$key>"));
-		graph.setStatement(XDI3Statement.create("$public$do/$get/$msg$sig$keypair$public<$key>"));
-		Literal literal = graph.getRootContextNode().setDeepLiteral(XDI3Segment.create("$https$connect$xdi<$uri>&"), uri);
-
-		System.out.println(literal.getStatement());
+		System.out.println("Maintainence for graph " + GraphUtil.getOwnerXri(graph));
 	}
 }

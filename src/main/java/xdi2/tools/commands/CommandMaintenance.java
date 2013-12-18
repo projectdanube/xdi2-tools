@@ -1,14 +1,9 @@
 package xdi2.tools.commands;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 
 import xdi2.core.Graph;
-import xdi2.core.Literal;
-import xdi2.core.features.nodetypes.XdiLocalRoot;
 import xdi2.core.util.GraphUtil;
-import xdi2.core.xri3.XDI3Segment;
-import xdi2.core.xri3.XDI3Statement;
 import xdi2.messaging.exceptions.Xdi2MessagingException;
 import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;

@@ -3,7 +3,7 @@ package xdi2.tools.commands;
 import xdi2.core.Graph;
 import xdi2.messaging.target.MessagingTarget;
 import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
-import xdi2.server.registry.HttpMessagingTargetRegistry;
+import xdi2.transport.impl.http.registry.HttpMessagingTargetRegistry;
 
 public abstract class AbstractGraphsCommand <T> extends AbstractMessagingTargetsCommand<T> implements Command {
 

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import xdi2.core.plugins.PluginsLoader;
-import xdi2.server.exceptions.Xdi2ServerException;
 import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
@@ -22,6 +21,7 @@ import xdi2.tools.commands.CommandMessageGraph;
 import xdi2.tools.commands.CommandMessageGraphs;
 import xdi2.tools.commands.CommandMigrateGraphs;
 import xdi2.tools.commands.CommandRestoreGraphs;
+import xdi2.transport.exceptions.Xdi2TransportException;
 
 public class XDI2Tools {
 
@@ -69,7 +69,7 @@ public class XDI2Tools {
 			PluginsLoader.loadPlugins();
 		} catch (IOException ex) {
 
-			throw new Xdi2ServerException("Cannot load plugins: " + ex.getMessage(), ex);
+			throw new Xdi2TransportException("Cannot load plugins: " + ex.getMessage(), ex);
 		}
 
 		// execute command

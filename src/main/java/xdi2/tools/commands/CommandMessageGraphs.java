@@ -13,10 +13,10 @@ import xdi2.messaging.MessageEnvelope;
 import xdi2.messaging.MessageResult;
 import xdi2.messaging.exceptions.Xdi2MessagingException;
 import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
-import xdi2.server.registry.HttpMessagingTargetRegistry;
 import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
+import xdi2.transport.impl.http.registry.HttpMessagingTargetRegistry;
 
 @CommandName("message-graphs")
 @CommandUsage("operation target [mime-type] [path-to-applicationContext.xml]")

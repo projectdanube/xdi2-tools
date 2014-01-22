@@ -7,9 +7,9 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import xdi2.core.util.iterators.MappingIterator;
 import xdi2.core.xri3.XDI3SubSegment;
 import xdi2.messaging.target.MessagingTarget;
-import xdi2.server.factory.MessagingTargetFactory;
-import xdi2.server.factory.impl.RegistryGraphMessagingTargetFactory;
-import xdi2.server.registry.HttpMessagingTargetRegistry;
+import xdi2.transport.impl.http.factory.MessagingTargetFactory;
+import xdi2.transport.impl.http.factory.impl.RegistryGraphMessagingTargetFactory;
+import xdi2.transport.impl.http.registry.HttpMessagingTargetRegistry;
 
 public abstract class AbstractMessagingTargetsCommand <T> extends AbstractMessagingTargetFactorysCommand<T> implements Command {
 

@@ -9,7 +9,7 @@ import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
-import xdi2.server.registry.HttpMessagingTargetRegistry;
+import xdi2.transport.impl.http.registry.HttpMessagingTargetRegistry;
 
 public class CommandUtil {
 

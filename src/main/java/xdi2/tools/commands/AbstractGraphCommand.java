@@ -5,8 +5,8 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import xdi2.core.Graph;
 import xdi2.messaging.target.MessagingTarget;
 import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
-import xdi2.server.factory.MessagingTargetFactory;
-import xdi2.server.registry.HttpMessagingTargetRegistry;
+import xdi2.transport.impl.http.factory.MessagingTargetFactory;
+import xdi2.transport.impl.http.registry.HttpMessagingTargetRegistry;
 
 public abstract class AbstractGraphCommand <T> implements Command {
 

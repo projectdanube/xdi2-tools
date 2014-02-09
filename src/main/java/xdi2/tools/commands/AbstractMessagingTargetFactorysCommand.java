@@ -2,8 +2,8 @@ package xdi2.tools.commands;
 
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
-import xdi2.server.factory.MessagingTargetFactory;
-import xdi2.server.registry.HttpMessagingTargetRegistry;
+import xdi2.transport.impl.http.factory.MessagingTargetFactory;
+import xdi2.transport.impl.http.registry.HttpMessagingTargetRegistry;
 
 public abstract class AbstractMessagingTargetFactorysCommand <T> implements Command {
 

@@ -2,11 +2,11 @@ package xdi2.tools.commands;
 
 import xdi2.messaging.target.MessagingTarget;
 import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
-import xdi2.server.factory.MessagingTargetFactory;
-import xdi2.server.registry.HttpMessagingTargetRegistry;
 import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
+import xdi2.transport.impl.http.factory.MessagingTargetFactory;
+import xdi2.transport.impl.http.registry.HttpMessagingTargetRegistry;
 
 @CommandName("list-messaging-targets")
 @CommandUsage("[path-to-applicationContext.xml]")

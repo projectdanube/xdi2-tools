@@ -1,8 +1,8 @@
 package xdi2.tools.commands;
 
 import xdi2.messaging.target.interceptor.impl.authentication.secrettoken.DigestSecretTokenAuthenticator;
-import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandArgs;
+import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
 
 @CommandName("generate-digest-secret-token")

@@ -12,13 +12,13 @@ import xdi2.core.xri3.XDI3SubSegment;
 import xdi2.messaging.exceptions.Xdi2MessagingException;
 import xdi2.messaging.target.MessagingTarget;
 import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
-import xdi2.server.exceptions.Xdi2ServerException;
-import xdi2.server.factory.MessagingTargetFactory;
-import xdi2.server.factory.impl.RegistryGraphMessagingTargetFactory;
-import xdi2.server.registry.HttpMessagingTargetRegistry;
 import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
+import xdi2.transport.exceptions.Xdi2TransportException;
+import xdi2.transport.impl.http.factory.MessagingTargetFactory;
+import xdi2.transport.impl.http.factory.impl.RegistryGraphMessagingTargetFactory;
+import xdi2.transport.impl.http.registry.HttpMessagingTargetRegistry;
 
 @CommandName("migrate-graphs")
 @CommandUsage("path-to-input-applicationContext.xml path-to-output-applicationContext.xml")
@@ -60,7 +60,7 @@ public class CommandMigrateGraphs implements Command {
 		}
 	}
 
-	private static void migrateMessagingTargetFactorys(HttpMessagingTargetRegistry inputHttpMessagingTargetRegistry, HttpMessagingTargetRegistry outputHttpMessagingTargetRegistry) throws Xdi2ServerException, Xdi2MessagingException {
+	private static void migrateMessagingTargetFactorys(HttpMessagingTargetRegistry inputHttpMessagingTargetRegistry, HttpMessagingTargetRegistry outputHttpMessagingTargetRegistry) throws Xdi2TransportException, Xdi2MessagingException {
 
 		for (String messagingTargetFactoryPath : inputHttpMessagingTargetRegistry.getMessagingTargetFactoryPaths()) {
 
@@ -88,7 +88,7 @@ public class CommandMigrateGraphs implements Command {
 		System.out.println("At path " + messagingTargetPath + " copied " + inputGraph.getRootContextNode().getAllStatementCount() + " statements from " + inputGraph.getClass().getSimpleName() + " to " + outputGraph.getRootContextNode().getAllStatementCount() + " statements in " + outputGraph.getClass().getSimpleName());
 	}
 
-	private static void migrateMessagingTargetFactory(final String messagingTargetFactoryPath, final MessagingTargetFactory inputMessagingTargetFactory, MessagingTargetFactory outputMessagingTargetFactory, HttpMessagingTargetRegistry inputHttpMessagingTargetRegistry, HttpMessagingTargetRegistry outputHttpMessagingTargetRegistry) throws Xdi2ServerException, Xdi2MessagingException {
+	private static void migrateMessagingTargetFactory(final String messagingTargetFactoryPath, final MessagingTargetFactory inputMessagingTargetFactory, MessagingTargetFactory outputMessagingTargetFactory, HttpMessagingTargetRegistry inputHttpMessagingTargetRegistry, HttpMessagingTargetRegistry outputHttpMessagingTargetRegistry) throws Xdi2TransportException, Xdi2MessagingException {
 
 		if (inputMessagingTargetFactory == null || ! (inputMessagingTargetFactory instanceof RegistryGraphMessagingTargetFactory)) return;
 		if (outputMessagingTargetFactory == null || ! (outputMessagingTargetFactory instanceof RegistryGraphMessagingTargetFactory)) return;

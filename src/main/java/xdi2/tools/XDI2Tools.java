@@ -82,7 +82,14 @@ public class XDI2Tools {
 			return;
 		}
 
-		command.execute(commandArgs);
+		try {
+
+			command.execute(commandArgs);
+		} catch (Exception ex) {
+
+			ex.printStackTrace(System.err);
+			System.exit(-1);
+		}
 	}
 
 	private static Command findCommand(String commandName) {

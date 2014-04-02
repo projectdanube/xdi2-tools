@@ -50,7 +50,14 @@ public class CommandBackupGraphs extends AbstractGraphsCommand<CommandBackupGrap
 
 		XDIWriter writer = state.mimeType == null ? XDIWriterRegistry.getDefault() : XDIWriterRegistry.forMimeType(new MimeType(state.mimeType));
 
-		writer.write(graph, state.zipOutputStream);
+		try {
+
+			writer.write(graph, state.zipOutputStream);
+		} catch (Exception ex) {
+
+			System.err.println("Problem while backing up graph " + messagingTargetPath);
+			ex.printStackTrace(System.err);
+		}
 
 		state.zipOutputStream.closeEntry();
 	}

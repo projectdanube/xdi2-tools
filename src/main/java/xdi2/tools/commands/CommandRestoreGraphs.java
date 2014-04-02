@@ -54,8 +54,15 @@ public class CommandRestoreGraphs extends AbstractGraphsCommand<CommandRestoreGr
 
 		XDIReader reader = XDIReaderRegistry.getAuto();
 
-		graph.clear();
-		reader.read(graph, zipInputStream);
+		try {
+
+			graph.clear();
+			reader.read(graph, zipInputStream);
+		} catch (Exception ex) {
+
+			System.err.println("Problem while restoring graph " + messagingTargetPath);
+			ex.printStackTrace(System.err);
+		}
 
 		zipInputStream.close();
 	}

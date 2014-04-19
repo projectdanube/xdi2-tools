@@ -13,7 +13,9 @@
 	</parent>
 
 	<build>
+
 		<plugins>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -51,16 +53,20 @@
 					</execution>
 				</executions>
 			</plugin>
+
 		</plugins>
+
 	</build>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>xdi2</groupId>
 			<artifactId>xdi2-transport-http-embedded</artifactId>
 			<version>0.3-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
+
 	</dependencies>
 
 </project>

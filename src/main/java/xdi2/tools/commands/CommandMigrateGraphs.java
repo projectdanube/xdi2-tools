@@ -86,6 +86,8 @@ public class CommandMigrateGraphs implements Command {
 		CopyUtil.copyGraph(tempGraph, outputGraph, null);
 
 		System.out.println("At path " + messagingTargetPath + " copied " + inputGraph.getRootContextNode().getAllStatementCount() + " statements from " + inputGraph.getClass().getSimpleName() + " to " + outputGraph.getRootContextNode().getAllStatementCount() + " statements in " + outputGraph.getClass().getSimpleName());
+
+		tempGraph.close();
 	}
 
 	private static void migrateMessagingTargetFactory(final String messagingTargetFactoryPath, final MessagingTargetFactory inputMessagingTargetFactory, MessagingTargetFactory outputMessagingTargetFactory, HttpMessagingTargetRegistry inputHttpMessagingTargetRegistry, HttpMessagingTargetRegistry outputHttpMessagingTargetRegistry) throws Xdi2TransportException, Xdi2MessagingException {

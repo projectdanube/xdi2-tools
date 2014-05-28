@@ -1,6 +1,6 @@
 package xdi2.tools.commands;
 
-import xdi2.messaging.target.interceptor.impl.authentication.secrettoken.DigestSecretTokenAuthenticator;
+import xdi2.core.features.secrettokens.SecretTokens;
 import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
@@ -20,9 +20,9 @@ public class CommandGenerateDigestSecretToken implements Command {
 		String localSaltAndDigestSecretToken;
 
 		if (localSalt == null)
-			localSaltAndDigestSecretToken = DigestSecretTokenAuthenticator.localSaltAndDigestSecretToken(secretToken, globalSalt);
+			localSaltAndDigestSecretToken = SecretTokens.localSaltAndDigestSecretToken(secretToken, globalSalt);
 		else
-			localSaltAndDigestSecretToken = DigestSecretTokenAuthenticator.localSaltAndDigestSecretToken(secretToken, globalSalt, localSalt);
+			localSaltAndDigestSecretToken = SecretTokens.localSaltAndDigestSecretToken(secretToken, globalSalt, localSalt);
 
 		System.out.println(localSaltAndDigestSecretToken);
 	}

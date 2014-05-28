@@ -13,7 +13,7 @@ import xdi2.tools.annotations.CommandUsage;
 
 @CommandName("discovery")
 @CommandUsage("address [endpoint]")
-@CommandArgs(min=1,max=1)
+@CommandArgs(min=1,max=2)
 public class CommandDiscovery implements Command {
 
 	@Override

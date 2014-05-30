@@ -6,6 +6,9 @@ This contains various maintenance and other tools for the [XDI2](http://github.c
 ### Information
 
 * [Usage](https://github.com/projectdanube/xdi2-tools/wiki/Usage)
+* Special Topics
+  * [Great Symbol Shift](https://github.com/projectdanube/xdi2-tools/wiki/Great-Symbol-Shift)
+  * [Link Contract Shift](https://github.com/projectdanube/xdi2-tools/wiki/Link-Contract-Shift)
 
 ### How to build
 

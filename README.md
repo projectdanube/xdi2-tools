@@ -19,7 +19,11 @@ To build all components.
 
 ### How to run
 
-	java -jar target/xdi2-tools-*.one-jar.jar
+	java -jar target/xdi2-tools-*.one-jar.jar [arguments]
+
+Or
+
+	mvn exec:java -Dexec.args="[arguments]"
 
 ### Community
 

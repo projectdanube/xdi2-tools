@@ -46,6 +46,8 @@ public class CommandRebuildGraphs extends AbstractGraphsCommand<CommandRebuildGr
 			StringWriter stringWriter = new StringWriter();
 			writer.write(graph, stringWriter);
 
+			graph.clear();
+
 			StringReader stringReader = new StringReader(stringWriter.toString());
 			reader.read(graph, stringReader);
 		} catch (Exception ex) {

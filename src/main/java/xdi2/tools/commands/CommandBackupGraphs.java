@@ -52,6 +52,8 @@ public class CommandBackupGraphs extends AbstractGraphsCommand<CommandBackupGrap
 
 		try {
 
+			if (writer == null) throw new RuntimeException("Unknown MIME type " + state.mimeType);
+
 			writer.write(graph, state.zipOutputStream);
 		} catch (Exception ex) {
 

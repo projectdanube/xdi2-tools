@@ -35,7 +35,16 @@ public class CommandDumpGraph extends AbstractGraphCommand<CommandDumpGraph.MySt
 
 		XDIWriter writer = state.mimeType == null ? XDIWriterRegistry.getDefault() : XDIWriterRegistry.forMimeType(new MimeType(state.mimeType));
 
-		writer.write(graph, System.out);
+		try {
+
+			if (writer == null) throw new RuntimeException("Unknown MIME type " + state.mimeType);
+
+			writer.write(graph, System.out);
+		} catch (Exception ex) {
+
+			System.err.println("Problem while rebuilding graph " + messagingTargetPath);
+			ex.printStackTrace(System.err);
+		}
 	}
 
 	public class MyState {

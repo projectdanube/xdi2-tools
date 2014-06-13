@@ -43,6 +43,8 @@ public class CommandRebuildGraphs extends AbstractGraphsCommand<CommandRebuildGr
 
 		try {
 
+			if (writer == null) throw new RuntimeException("Unknown MIME type " + state.mimeType);
+
 			StringWriter stringWriter = new StringWriter();
 			writer.write(graph, stringWriter);
 

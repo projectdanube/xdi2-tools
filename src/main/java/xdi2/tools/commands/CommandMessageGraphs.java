@@ -8,7 +8,7 @@ import xdi2.core.Graph;
 import xdi2.core.io.MimeType;
 import xdi2.core.io.XDIWriter;
 import xdi2.core.io.XDIWriterRegistry;
-import xdi2.core.xri3.XDI3Segment;
+import xdi2.core.syntax.XDIAddress;
 import xdi2.messaging.MessageEnvelope;
 import xdi2.messaging.MessageResult;
 import xdi2.messaging.exceptions.Xdi2MessagingException;
@@ -47,7 +47,7 @@ public class CommandMessageGraphs extends AbstractGraphsCommand<CommandMessageGr
 		GraphMessagingTarget commandGraphMessagingTarget = new GraphMessagingTarget();
 		commandGraphMessagingTarget.setGraph(graph);
 
-		MessageEnvelope commandMessageEnvelope = MessageEnvelope.fromOperationXriAndTargetAddressOrTargetStatement(XDI3Segment.create(state.operation), state.target);
+		MessageEnvelope commandMessageEnvelope = MessageEnvelope.fromOperationXDIAddressAndTargetXDIAddressOrTargetXDIStatement(XDIAddress.create(state.operation), state.target);
 		MessageResult commandMessageResult = new MessageResult();
 
 		commandGraphMessagingTarget.execute(commandMessageEnvelope, commandMessageResult, null);

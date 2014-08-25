@@ -4,7 +4,7 @@ import java.io.StringWriter;
 import java.util.Map;
 
 import xdi2.client.http.XDIHttpClient;
-import xdi2.core.xri3.XDI3Segment;
+import xdi2.core.syntax.XDIAddress;
 import xdi2.discovery.XDIDiscoveryClient;
 import xdi2.discovery.XDIDiscoveryResult;
 import xdi2.tools.annotations.CommandArgs;
@@ -35,7 +35,7 @@ public class CommandDiscovery implements Command {
 
 			// from registry
 
-			discoveryResultRegistry = discoveryClient.discoverFromRegistry(XDI3Segment.create(address), null);
+			discoveryResultRegistry = discoveryClient.discoverFromRegistry(XDIAddress.create(address), null);
 
 			// from authority
 
@@ -63,7 +63,7 @@ public class CommandDiscovery implements Command {
 					writer.write("Services: (none)\n");
 				} else {
 
-					for (Map.Entry<XDI3Segment, String> endpointUri : discoveryResultRegistry.getEndpointUris().entrySet()) {
+					for (Map.Entry<XDIAddress, String> endpointUri : discoveryResultRegistry.getEndpointUris().entrySet()) {
 
 						writer.write("Service " + endpointUri.getKey() + ": " + endpointUri.getValue() + "\n");
 					}
@@ -89,7 +89,7 @@ public class CommandDiscovery implements Command {
 					writer2.write("Services: (none)\n");
 				} else {
 
-					for (Map.Entry<XDI3Segment, String> endpointUri : discoveryResultAuthority.getEndpointUris().entrySet()) {
+					for (Map.Entry<XDIAddress, String> endpointUri : discoveryResultAuthority.getEndpointUris().entrySet()) {
 
 						writer2.write("Service " + endpointUri.getKey() + ": " + endpointUri.getValue() + "\n");
 					}

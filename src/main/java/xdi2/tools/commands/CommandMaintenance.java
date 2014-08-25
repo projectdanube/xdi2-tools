@@ -29,6 +29,6 @@ public class CommandMaintenance extends AbstractGraphsCommand<Object> implements
 	@Override
 	protected void callbackGraph(String messagingTargetPath, Graph graph, Object state) throws Xdi2MessagingException, IOException {
 
-		System.out.println("Maintainence for graph " + GraphUtil.getOwnerXri(graph));
+		System.out.println("Maintainence for graph " + GraphUtil.getOwnerXDIAddress(graph));
 	}
 }

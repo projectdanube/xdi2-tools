@@ -6,9 +6,9 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import xdi2.core.Graph;
 import xdi2.core.impl.memory.MemoryGraphFactory;
+import xdi2.core.syntax.XDIArc;
 import xdi2.core.util.CopyUtil;
 import xdi2.core.util.iterators.MappingIterator;
-import xdi2.core.xri3.XDI3SubSegment;
 import xdi2.messaging.exceptions.Xdi2MessagingException;
 import xdi2.messaging.target.MessagingTarget;
 import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
@@ -98,14 +98,14 @@ public class CommandMigrateGraphs implements Command {
 		if (! (((RegistryGraphMessagingTargetFactory) inputMessagingTargetFactory).getPrototypeMessagingTarget() instanceof GraphMessagingTarget)) return;
 		if (! (((RegistryGraphMessagingTargetFactory) outputMessagingTargetFactory).getPrototypeMessagingTarget() instanceof GraphMessagingTarget)) return;
 
-		Iterator<XDI3SubSegment> ownerPeerRootXris = inputMessagingTargetFactory.getOwnerPeerRootXris();
+		Iterator<XDIArc> ownerPeerRootAddresses = inputMessagingTargetFactory.getOwnerPeerRootAddresses();
 
-		Iterator<String> requestPaths = new MappingIterator<XDI3SubSegment, String> (ownerPeerRootXris) {
+		Iterator<String> requestPaths = new MappingIterator<XDIArc, String> (ownerPeerRootAddresses) {
 
 			@Override
-			public String map(XDI3SubSegment ownerPeerRootXri) {
+			public String map(XDIArc ownerPeerRootAddress) {
 
-				return inputMessagingTargetFactory.getRequestPath(messagingTargetFactoryPath, ownerPeerRootXri);
+				return inputMessagingTargetFactory.getRequestPath(messagingTargetFactoryPath, ownerPeerRootAddress);
 			}
 		};
 

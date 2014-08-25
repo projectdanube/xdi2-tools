@@ -4,8 +4,8 @@ import java.util.Iterator;
 
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
+import xdi2.core.syntax.XDIArc;
 import xdi2.core.util.iterators.MappingIterator;
-import xdi2.core.xri3.XDI3SubSegment;
 import xdi2.messaging.target.MessagingTarget;
 import xdi2.transport.impl.http.factory.MessagingTargetFactory;
 import xdi2.transport.impl.http.factory.impl.RegistryGraphMessagingTargetFactory;
@@ -34,14 +34,14 @@ public abstract class AbstractMessagingTargetsCommand <T> extends AbstractMessag
 
 		if (! (messagingTargetFactory instanceof RegistryGraphMessagingTargetFactory)) return;
 
-		Iterator<XDI3SubSegment> ownerPeerRootXris = messagingTargetFactory.getOwnerPeerRootXris();
+		Iterator<XDIArc> ownerPeerRootAddresses = messagingTargetFactory.getOwnerPeerRootAddresses();
 
-		Iterator<String> requestPaths = new MappingIterator<XDI3SubSegment, String> (ownerPeerRootXris) {
+		Iterator<String> requestPaths = new MappingIterator<XDIArc, String> (ownerPeerRootAddresses) {
 
 			@Override
-			public String map(XDI3SubSegment ownerPeerRootXri) {
+			public String map(XDIArc ownerPeerRootAddress) {
 
-				return messagingTargetFactory.getRequestPath(messagingTargetFactoryPath, ownerPeerRootXri);
+				return messagingTargetFactory.getRequestPath(messagingTargetFactoryPath, ownerPeerRootAddress);
 			}
 		};
 

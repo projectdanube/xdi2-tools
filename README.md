@@ -10,6 +10,9 @@ This contains various maintenance and other tools for the [XDI2](http://github.c
   * [Great Symbol Shift](https://github.com/projectdanube/xdi2-tools/wiki/Great-Symbol-Shift)
   * [Link Contract Shift](https://github.com/projectdanube/xdi2-tools/wiki/Link-Contract-Shift)
   * [Notation Shift](https://github.com/projectdanube/xdi2-tools/wiki/Notation-Shift)
+  * [No Value Node Shift](https://github.com/projectdanube/xdi2-tools/wiki/No-Value-Node-Shift)
+  * [Star Shift](https://github.com/projectdanube/xdi2-tools/wiki/Star-Shift)
+  * [Single Arc Shift](https://github.com/projectdanube/xdi2-tools/wiki/Single-Arc-Shift)
 
 ### How to build
 

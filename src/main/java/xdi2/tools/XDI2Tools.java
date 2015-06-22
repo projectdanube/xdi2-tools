@@ -16,6 +16,7 @@ import xdi2.tools.commands.CommandListClassLoaders;
 import xdi2.tools.commands.CommandListMessagingTargetFactorys;
 import xdi2.tools.commands.CommandListMessagingTargets;
 import xdi2.tools.commands.CommandListPlugins;
+import xdi2.tools.commands.CommandLoadGraph;
 import xdi2.tools.commands.CommandMaintenance;
 import xdi2.tools.commands.CommandMessageGraph;
 import xdi2.tools.commands.CommandMessageGraphs;
@@ -32,6 +33,7 @@ public class XDI2Tools {
 		new CommandListMessagingTargetFactorys(),
 		new CommandListMessagingTargets(),
 		new CommandDumpGraph(),
+		new CommandLoadGraph(),
 		new CommandBackupGraphs(),
 		new CommandRestoreGraphs(),
 		new CommandRebuildGraphs(),

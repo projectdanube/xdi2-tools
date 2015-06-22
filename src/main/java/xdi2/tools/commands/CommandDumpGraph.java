@@ -42,7 +42,7 @@ public class CommandDumpGraph extends AbstractGraphCommand<CommandDumpGraph.MySt
 			writer.write(graph, System.out);
 		} catch (Exception ex) {
 
-			System.err.println("Problem while rebuilding graph " + messagingTargetPath);
+			System.err.println("Problem while dumping graph " + messagingTargetPath);
 			ex.printStackTrace(System.err);
 		}
 	}

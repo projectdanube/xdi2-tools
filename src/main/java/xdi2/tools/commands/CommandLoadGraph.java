@@ -5,7 +5,7 @@ import java.io.IOException;
 import xdi2.core.Graph;
 import xdi2.core.io.XDIReader;
 import xdi2.core.io.XDIReaderRegistry;
-import xdi2.messaging.exceptions.Xdi2MessagingException;
+import xdi2.messaging.target.exceptions.Xdi2MessagingException;
 import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;

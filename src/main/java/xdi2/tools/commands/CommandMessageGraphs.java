@@ -4,14 +4,15 @@ import java.io.IOException;
 
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
+import xdi2.client.exceptions.Xdi2ClientException;
+import xdi2.client.impl.local.XDILocalClient;
 import xdi2.core.Graph;
 import xdi2.core.io.MimeType;
 import xdi2.core.io.XDIWriter;
 import xdi2.core.io.XDIWriterRegistry;
 import xdi2.core.syntax.XDIAddress;
 import xdi2.messaging.MessageEnvelope;
-import xdi2.messaging.MessageResult;
-import xdi2.messaging.exceptions.Xdi2MessagingException;
+import xdi2.messaging.response.MessagingResponse;
 import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
 import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
@@ -42,19 +43,18 @@ public class CommandMessageGraphs extends AbstractGraphsCommand<CommandMessageGr
 	}
 
 	@Override
-	protected void callbackGraph(String messagingTargetPath, Graph graph, MyState state) throws Xdi2MessagingException, IOException {
+	protected void callbackGraph(String messagingTargetPath, Graph graph, MyState state) throws Xdi2ClientException, IOException {
 
 		GraphMessagingTarget commandGraphMessagingTarget = new GraphMessagingTarget();
 		commandGraphMessagingTarget.setGraph(graph);
 
 		MessageEnvelope commandMessageEnvelope = MessageEnvelope.fromOperationXDIAddressAndTargetXDIAddressOrTargetXDIStatement(XDIAddress.create(state.operation), state.target);
-		MessageResult commandMessageResult = new MessageResult();
+		MessagingResponse commandMessagingResponse;
 
-		commandGraphMessagingTarget.execute(commandMessageEnvelope, commandMessageResult, null);
+		commandMessagingResponse = new XDILocalClient(commandGraphMessagingTarget).send(commandMessageEnvelope);
 
 		XDIWriter writer = state.mimeType == null ? XDIWriterRegistry.getDefault() : XDIWriterRegistry.forMimeType(new MimeType(state.mimeType));
-
-		writer.write(commandMessageResult.getGraph(), System.out);
+		writer.write(commandMessagingResponse.getResultGraph(), System.out);
 
 		System.out.println("At path " + messagingTargetPath + " executed message on graph " + graph.getClass().getSimpleName());
 	}

@@ -4,7 +4,7 @@ import java.io.StringWriter;
 import java.net.URI;
 import java.util.Map;
 
-import xdi2.client.http.XDIHttpClient;
+import xdi2.client.impl.http.XDIHttpClient;
 import xdi2.core.syntax.XDIAddress;
 import xdi2.discovery.XDIDiscoveryClient;
 import xdi2.discovery.XDIDiscoveryResult;
@@ -113,8 +113,8 @@ public class CommandDiscovery implements Command {
 
 		String stats = "";
 		stats += Long.toString(stop - start) + " ms time. ";
-		if (discoveryResultRegistry != null && discoveryResultRegistry.getMessageResult() != null) stats += Long.toString(discoveryResultRegistry.getMessageResult().getGraph().getRootContextNode().getAllStatementCount()) + " result statement(s) from registry. ";
-		if (discoveryResultAuthority != null && discoveryResultAuthority.getMessageResult() != null) stats += Long.toString(discoveryResultAuthority.getMessageResult().getGraph().getRootContextNode().getAllStatementCount()) + " result statement(s) from authority. ";
+		if (discoveryResultRegistry != null && discoveryResultRegistry.getMessagingResponse() != null) stats += Long.toString(discoveryResultRegistry.getMessagingResponse().getGraph().getRootContextNode().getAllStatementCount()) + " result statement(s) from registry. ";
+		if (discoveryResultAuthority != null && discoveryResultAuthority.getMessagingResponse() != null) stats += Long.toString(discoveryResultAuthority.getMessagingResponse().getGraph().getRootContextNode().getAllStatementCount()) + " result statement(s) from authority. ";
 
 		System.out.println(stats);
 	}

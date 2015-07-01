@@ -1,6 +1,6 @@
 package xdi2.tools.commands;
 
-import xdi2.messaging.exceptions.Xdi2MessagingException;
+import xdi2.messaging.target.exceptions.Xdi2MessagingException;
 import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;

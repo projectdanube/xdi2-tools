@@ -40,9 +40,9 @@ public class CommandDiscovery implements Command {
 
 			// from authority
 
-			if (discoveryResultRegistry != null && discoveryResultRegistry.getXdiEndpointUrl() != null) {
+			if (discoveryResultRegistry != null && discoveryResultRegistry.getXdiEndpointUri() != null) {
 
-				discoveryResultAuthority = discoveryClient.discoverFromAuthority(discoveryResultRegistry.getXdiEndpointUrl(), discoveryResultRegistry.getCloudNumber());
+				discoveryResultAuthority = discoveryClient.discoverFromAuthority(discoveryResultRegistry.getXdiEndpointUri(), discoveryResultRegistry.getCloudNumber());
 			}
 
 			// output result
@@ -55,7 +55,7 @@ public class CommandDiscovery implements Command {
 				writer.write("Information from registry:\n\n");
 
 				writer.write("Cloud Number: " + discoveryResultRegistry.getCloudNumber() + "\n");
-				writer.write("XDI Endpoint URI: " + discoveryResultRegistry.getXdiEndpointUrl() + "\n");
+				writer.write("XDI Endpoint URI: " + discoveryResultRegistry.getXdiEndpointUri() + "\n");
 				writer.write("Signature Public Key: " + discoveryResultRegistry.getSignaturePublicKey() + "\n");
 				writer.write("Encryption Public Key: " + discoveryResultRegistry.getEncryptionPublicKey() + "\n");
 
@@ -81,7 +81,7 @@ public class CommandDiscovery implements Command {
 				writer2.write("Information from authority:\n\n");
 
 				writer2.write("Cloud Number: " + discoveryResultAuthority.getCloudNumber() + "\n");
-				writer2.write("XDI Endpoint URI: " + discoveryResultAuthority.getXdiEndpointUrl() + "\n");
+				writer2.write("XDI Endpoint URI: " + discoveryResultAuthority.getXdiEndpointUri() + "\n");
 				writer2.write("Signature Public Key: " + discoveryResultAuthority.getSignaturePublicKey() + "\n");
 				writer2.write("Encryption Public Key: " + discoveryResultAuthority.getEncryptionPublicKey() + "\n");
 

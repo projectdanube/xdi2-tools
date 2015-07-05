@@ -26,7 +26,7 @@ public class CommandListMessagingTargets extends AbstractMessagingTargetsCommand
 	}
 
 	@Override
-	protected void callbackMessagingTarget(String messagingTargetPath, MessagingTarget messagingTarget, UriMessagingTargetRegistry httpMessagingTargetRegistry, Object state) {
+	protected void callbackMessagingTarget(String messagingTargetPath, MessagingTarget messagingTarget, UriMessagingTargetRegistry uriMessagingTargetRegistry, Object state) {
 
 		StringBuilder buffer = new StringBuilder();
 
@@ -41,7 +41,7 @@ public class CommandListMessagingTargets extends AbstractMessagingTargetsCommand
 	}
 
 	@Override
-	protected void callbackMessagingTargetFactory(String messagingTargetFactoryPath, UriMessagingTargetFactory messagingTargetFactory, UriMessagingTargetRegistry httpMessagingTargetRegistry, Object state) throws Exception {
+	protected void callbackMessagingTargetFactory(String messagingTargetFactoryPath, UriMessagingTargetFactory messagingTargetFactory, UriMessagingTargetRegistry uriMessagingTargetRegistry, Object state) throws Exception {
 
 		StringBuilder buffer = new StringBuilder();
 
@@ -49,6 +49,6 @@ public class CommandListMessagingTargets extends AbstractMessagingTargetsCommand
 
 		System.out.println(buffer.toString());
 
-		super.callbackMessagingTargetFactory(messagingTargetFactoryPath, messagingTargetFactory, httpMessagingTargetRegistry, state);
+		super.callbackMessagingTargetFactory(messagingTargetFactoryPath, messagingTargetFactory, uriMessagingTargetRegistry, state);
 	}
 }

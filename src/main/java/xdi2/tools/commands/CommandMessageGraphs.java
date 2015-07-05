@@ -36,8 +36,8 @@ public class CommandMessageGraphs extends AbstractGraphsCommand<CommandMessageGr
 
 		if (applicationContextPath == null) applicationContextPath = DEFAULT_APPLICATIONCONTEXTPATH;
 
-		UriMessagingTargetRegistry httpMessagingTargetRegistry = CommandUtil.getUriMessagingTargetRegistry(applicationContextPath);
-		if (httpMessagingTargetRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'UriMessagingTargetRegistry' not found in " + applicationContextPath);
+		UriMessagingTargetRegistry uriMessagingTargetRegistry = CommandUtil.getUriMessagingTargetRegistry(applicationContextPath);
+		if (uriMessagingTargetRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'UriMessagingTargetRegistry' not found in " + applicationContextPath);
 
 		this.commandGraphs(applicationContextPath, new MyState(mimeType, operation, target));
 	}

@@ -9,17 +9,17 @@ public abstract class AbstractMessagingTargetFactorysCommand <T> implements Comm
 
 	protected void commandMessagingTargetFactorys(String applicationContextPath, T state) throws Exception {
 
-		UriMessagingTargetRegistry httpMessagingTargetRegistry = CommandUtil.getUriMessagingTargetRegistry(applicationContextPath);
-		if (httpMessagingTargetRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'UriMessagingTargetRegistry' not found in " + applicationContextPath);
+		UriMessagingTargetRegistry uriMessagingTargetRegistry = CommandUtil.getUriMessagingTargetRegistry(applicationContextPath);
+		if (uriMessagingTargetRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'UriMessagingTargetRegistry' not found in " + applicationContextPath);
 
-		for (String messagingTargetFactoryPath : httpMessagingTargetRegistry.getMessagingTargetFactoryPaths()) {
+		for (String messagingTargetFactoryPath : uriMessagingTargetRegistry.getMessagingTargetFactoryPaths()) {
 
-			UriMessagingTargetFactory messagingTargetFactory = httpMessagingTargetRegistry.getMessagingTargetFactory(messagingTargetFactoryPath);
+			UriMessagingTargetFactory messagingTargetFactory = uriMessagingTargetRegistry.getMessagingTargetFactory(messagingTargetFactoryPath);
 			if (messagingTargetFactory == null) continue;
 
-			this.callbackMessagingTargetFactory(messagingTargetFactoryPath, messagingTargetFactory, httpMessagingTargetRegistry, state);
+			this.callbackMessagingTargetFactory(messagingTargetFactoryPath, messagingTargetFactory, uriMessagingTargetRegistry, state);
 		}
 	}
 
-	protected abstract void callbackMessagingTargetFactory(String messagingTargetFactoryPath, UriMessagingTargetFactory messagingTargetFactory, UriMessagingTargetRegistry httpMessagingTargetRegistry, T state) throws Exception;
+	protected abstract void callbackMessagingTargetFactory(String messagingTargetFactoryPath, UriMessagingTargetFactory messagingTargetFactory, UriMessagingTargetRegistry uriMessagingTargetRegistry, T state) throws Exception;
 }

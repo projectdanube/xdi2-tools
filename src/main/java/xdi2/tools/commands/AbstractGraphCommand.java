@@ -12,17 +12,17 @@ public abstract class AbstractGraphCommand <T> implements Command {
 
 	protected void commandGraph(String applicationContextPath, String requestPath, T state) throws Exception {
 
-		UriMessagingTargetRegistry httpMessagingTargetRegistry = CommandUtil.getUriMessagingTargetRegistry(applicationContextPath);
-		if (httpMessagingTargetRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'UriMessagingTargetRegistry' not found in " + applicationContextPath);
+		UriMessagingTargetRegistry uriMessagingTargetRegistry = CommandUtil.getUriMessagingTargetRegistry(applicationContextPath);
+		if (uriMessagingTargetRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'UriMessagingTargetRegistry' not found in " + applicationContextPath);
 
-		String messagingTargetPath = httpMessagingTargetRegistry.findMessagingTargetPath(requestPath);
-		MessagingTarget messagingTarget = messagingTargetPath == null ? null : httpMessagingTargetRegistry.getMessagingTarget(messagingTargetPath);
+		String messagingTargetPath = uriMessagingTargetRegistry.findMessagingTargetPath(requestPath);
+		MessagingTarget messagingTarget = messagingTargetPath == null ? null : uriMessagingTargetRegistry.getMessagingTarget(messagingTargetPath);
 
 		if (messagingTarget == null) {
 
-			String messagingTargetFactoryPath = httpMessagingTargetRegistry.findMessagingTargetFactoryPath(requestPath);
-			UriMessagingTargetFactory messagingTargetFactory = messagingTargetFactoryPath == null ? null : httpMessagingTargetRegistry.getMessagingTargetFactory(messagingTargetFactoryPath);
-			messagingTarget = messagingTargetFactory == null ? null : messagingTargetFactory.mountMessagingTarget(httpMessagingTargetRegistry, messagingTargetFactoryPath, requestPath);
+			String messagingTargetFactoryPath = uriMessagingTargetRegistry.findMessagingTargetFactoryPath(requestPath);
+			UriMessagingTargetFactory messagingTargetFactory = messagingTargetFactoryPath == null ? null : uriMessagingTargetRegistry.getMessagingTargetFactory(messagingTargetFactoryPath);
+			messagingTarget = messagingTargetFactory == null ? null : messagingTargetFactory.mountMessagingTarget(uriMessagingTargetRegistry, messagingTargetFactoryPath, requestPath);
 		}
 
 		if (messagingTarget == null) {

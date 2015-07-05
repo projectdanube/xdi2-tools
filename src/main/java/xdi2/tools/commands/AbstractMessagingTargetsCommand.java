@@ -15,22 +15,22 @@ public abstract class AbstractMessagingTargetsCommand <T> extends AbstractMessag
 
 	protected void commandMessagingTargets(String applicationContextPath, T state) throws Exception {
 
-		UriMessagingTargetRegistry httpMessagingTargetRegistry = CommandUtil.getUriMessagingTargetRegistry(applicationContextPath);
-		if (httpMessagingTargetRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'UriMessagingTargetRegistry' not found in " + applicationContextPath);
+		UriMessagingTargetRegistry uriMessagingTargetRegistry = CommandUtil.getUriMessagingTargetRegistry(applicationContextPath);
+		if (uriMessagingTargetRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'UriMessagingTargetRegistry' not found in " + applicationContextPath);
 
-		for (String messagingTargetPath : httpMessagingTargetRegistry.getMessagingTargetPaths()) {
+		for (String messagingTargetPath : uriMessagingTargetRegistry.getMessagingTargetPaths()) {
 
-			MessagingTarget messagingTarget = httpMessagingTargetRegistry.getMessagingTarget(messagingTargetPath);
+			MessagingTarget messagingTarget = uriMessagingTargetRegistry.getMessagingTarget(messagingTargetPath);
 			if (messagingTarget == null) continue;
 
-			this.callbackMessagingTarget(messagingTargetPath, messagingTarget, httpMessagingTargetRegistry, state);
+			this.callbackMessagingTarget(messagingTargetPath, messagingTarget, uriMessagingTargetRegistry, state);
 		}
 
 		this.commandMessagingTargetFactorys(applicationContextPath, state);
 	}
 
 	@Override
-	protected void callbackMessagingTargetFactory(final String messagingTargetFactoryPath, final UriMessagingTargetFactory messagingTargetFactory, UriMessagingTargetRegistry httpMessagingTargetRegistry, T state) throws Exception {
+	protected void callbackMessagingTargetFactory(final String messagingTargetFactoryPath, final UriMessagingTargetFactory messagingTargetFactory, UriMessagingTargetRegistry uriMessagingTargetRegistry, T state) throws Exception {
 
 		if (! (messagingTargetFactory instanceof RegistryUriMessagingTargetFactory)) return;
 
@@ -50,11 +50,11 @@ public abstract class AbstractMessagingTargetsCommand <T> extends AbstractMessag
 			String requestPath = requestPaths.next();
 			String messagingTargetPath = requestPath;
 
-			MessagingTarget messagingTarget = messagingTargetFactory.mountMessagingTarget(httpMessagingTargetRegistry, messagingTargetFactoryPath, requestPath);
+			MessagingTarget messagingTarget = messagingTargetFactory.mountMessagingTarget(uriMessagingTargetRegistry, messagingTargetFactoryPath, requestPath);
 
-			this.callbackMessagingTarget(messagingTargetPath, messagingTarget, httpMessagingTargetRegistry, state);
+			this.callbackMessagingTarget(messagingTargetPath, messagingTarget, uriMessagingTargetRegistry, state);
 		}
 	}
 
-	protected abstract void callbackMessagingTarget(String messagingTargetPath, MessagingTarget messagingTarget, UriMessagingTargetRegistry httpMessagingTargetRegistry, T state) throws Exception;
+	protected abstract void callbackMessagingTarget(String messagingTargetPath, MessagingTarget messagingTarget, UriMessagingTargetRegistry uriMessagingTargetRegistry, T state) throws Exception;
 }

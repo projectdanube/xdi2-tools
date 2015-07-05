@@ -26,7 +26,7 @@ public class CommandListMessagingTargetFactorys extends AbstractMessagingTargetF
 	}
 
 	@Override
-	protected void callbackMessagingTargetFactory(String messagingTargetFactoryPath, UriMessagingTargetFactory messagingTargetFactory, UriMessagingTargetRegistry httpMessagingTargetRegistry, Object state) throws Xdi2TransportException, Xdi2MessagingException {
+	protected void callbackMessagingTargetFactory(String messagingTargetFactoryPath, UriMessagingTargetFactory messagingTargetFactory, UriMessagingTargetRegistry uriMessagingTargetRegistry, Object state) throws Xdi2TransportException, Xdi2MessagingException {
 
 		StringBuilder buffer = new StringBuilder();
 

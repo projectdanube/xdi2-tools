@@ -1,12 +1,12 @@
 package xdi2.tools.commands;
 
 import xdi2.messaging.target.MessagingTarget;
+import xdi2.messaging.target.factory.impl.uri.UriMessagingTargetFactory;
 import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
 import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
-import xdi2.transport.impl.http.factory.MessagingTargetFactory;
-import xdi2.transport.impl.http.registry.HttpMessagingTargetRegistry;
+import xdi2.transport.registry.impl.uri.UriMessagingTargetRegistry;
 
 @CommandName("list-messaging-targets")
 @CommandUsage("[path-to-applicationContext.xml]")
@@ -26,7 +26,7 @@ public class CommandListMessagingTargets extends AbstractMessagingTargetsCommand
 	}
 
 	@Override
-	protected void callbackMessagingTarget(String messagingTargetPath, MessagingTarget messagingTarget, HttpMessagingTargetRegistry httpMessagingTargetRegistry, Object state) {
+	protected void callbackMessagingTarget(String messagingTargetPath, MessagingTarget messagingTarget, UriMessagingTargetRegistry httpMessagingTargetRegistry, Object state) {
 
 		StringBuilder buffer = new StringBuilder();
 
@@ -41,7 +41,7 @@ public class CommandListMessagingTargets extends AbstractMessagingTargetsCommand
 	}
 
 	@Override
-	protected void callbackMessagingTargetFactory(String messagingTargetFactoryPath, MessagingTargetFactory messagingTargetFactory, HttpMessagingTargetRegistry httpMessagingTargetRegistry, Object state) throws Exception {
+	protected void callbackMessagingTargetFactory(String messagingTargetFactoryPath, UriMessagingTargetFactory messagingTargetFactory, UriMessagingTargetRegistry httpMessagingTargetRegistry, Object state) throws Exception {
 
 		StringBuilder buffer = new StringBuilder();
 

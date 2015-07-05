@@ -4,16 +4,16 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import xdi2.core.Graph;
 import xdi2.messaging.target.MessagingTarget;
+import xdi2.messaging.target.factory.impl.uri.UriMessagingTargetFactory;
 import xdi2.messaging.target.impl.graph.GraphMessagingTarget;
-import xdi2.transport.impl.http.factory.MessagingTargetFactory;
-import xdi2.transport.impl.http.registry.HttpMessagingTargetRegistry;
+import xdi2.transport.registry.impl.uri.UriMessagingTargetRegistry;
 
 public abstract class AbstractGraphCommand <T> implements Command {
 
 	protected void commandGraph(String applicationContextPath, String requestPath, T state) throws Exception {
 
-		HttpMessagingTargetRegistry httpMessagingTargetRegistry = CommandUtil.getHttpMessagingTargetRegistry(applicationContextPath);
-		if (httpMessagingTargetRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'HttpMessagingTargetRegistry' not found in " + applicationContextPath);
+		UriMessagingTargetRegistry httpMessagingTargetRegistry = CommandUtil.getUriMessagingTargetRegistry(applicationContextPath);
+		if (httpMessagingTargetRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'UriMessagingTargetRegistry' not found in " + applicationContextPath);
 
 		String messagingTargetPath = httpMessagingTargetRegistry.findMessagingTargetPath(requestPath);
 		MessagingTarget messagingTarget = messagingTargetPath == null ? null : httpMessagingTargetRegistry.getMessagingTarget(messagingTargetPath);
@@ -21,7 +21,7 @@ public abstract class AbstractGraphCommand <T> implements Command {
 		if (messagingTarget == null) {
 
 			String messagingTargetFactoryPath = httpMessagingTargetRegistry.findMessagingTargetFactoryPath(requestPath);
-			MessagingTargetFactory messagingTargetFactory = messagingTargetFactoryPath == null ? null : httpMessagingTargetRegistry.getMessagingTargetFactory(messagingTargetFactoryPath);
+			UriMessagingTargetFactory messagingTargetFactory = messagingTargetFactoryPath == null ? null : httpMessagingTargetRegistry.getMessagingTargetFactory(messagingTargetFactoryPath);
 			messagingTarget = messagingTargetFactory == null ? null : messagingTargetFactory.mountMessagingTarget(httpMessagingTargetRegistry, messagingTargetFactoryPath, requestPath);
 		}
 

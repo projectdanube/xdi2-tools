@@ -2,24 +2,24 @@ package xdi2.tools.commands;
 
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
-import xdi2.transport.impl.http.factory.MessagingTargetFactory;
-import xdi2.transport.impl.http.registry.HttpMessagingTargetRegistry;
+import xdi2.messaging.target.factory.impl.uri.UriMessagingTargetFactory;
+import xdi2.transport.registry.impl.uri.UriMessagingTargetRegistry;
 
 public abstract class AbstractMessagingTargetFactorysCommand <T> implements Command {
 
 	protected void commandMessagingTargetFactorys(String applicationContextPath, T state) throws Exception {
 
-		HttpMessagingTargetRegistry httpMessagingTargetRegistry = CommandUtil.getHttpMessagingTargetRegistry(applicationContextPath);
-		if (httpMessagingTargetRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'HttpMessagingTargetRegistry' not found in " + applicationContextPath);
+		UriMessagingTargetRegistry httpMessagingTargetRegistry = CommandUtil.getUriMessagingTargetRegistry(applicationContextPath);
+		if (httpMessagingTargetRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'UriMessagingTargetRegistry' not found in " + applicationContextPath);
 
 		for (String messagingTargetFactoryPath : httpMessagingTargetRegistry.getMessagingTargetFactoryPaths()) {
 
-			MessagingTargetFactory messagingTargetFactory = httpMessagingTargetRegistry.getMessagingTargetFactory(messagingTargetFactoryPath);
+			UriMessagingTargetFactory messagingTargetFactory = httpMessagingTargetRegistry.getMessagingTargetFactory(messagingTargetFactoryPath);
 			if (messagingTargetFactory == null) continue;
 
 			this.callbackMessagingTargetFactory(messagingTargetFactoryPath, messagingTargetFactory, httpMessagingTargetRegistry, state);
 		}
 	}
 
-	protected abstract void callbackMessagingTargetFactory(String messagingTargetFactoryPath, MessagingTargetFactory messagingTargetFactory, HttpMessagingTargetRegistry httpMessagingTargetRegistry, T state) throws Exception;
+	protected abstract void callbackMessagingTargetFactory(String messagingTargetFactoryPath, UriMessagingTargetFactory messagingTargetFactory, UriMessagingTargetRegistry httpMessagingTargetRegistry, T state) throws Exception;
 }

@@ -7,16 +7,16 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import xdi2.core.syntax.XDIArc;
 import xdi2.core.util.iterators.MappingIterator;
 import xdi2.messaging.target.MessagingTarget;
-import xdi2.transport.impl.http.factory.MessagingTargetFactory;
-import xdi2.transport.impl.http.factory.impl.RegistryGraphMessagingTargetFactory;
-import xdi2.transport.impl.http.registry.HttpMessagingTargetRegistry;
+import xdi2.messaging.target.factory.impl.uri.RegistryUriMessagingTargetFactory;
+import xdi2.messaging.target.factory.impl.uri.UriMessagingTargetFactory;
+import xdi2.transport.registry.impl.uri.UriMessagingTargetRegistry;
 
 public abstract class AbstractMessagingTargetsCommand <T> extends AbstractMessagingTargetFactorysCommand<T> implements Command {
 
 	protected void commandMessagingTargets(String applicationContextPath, T state) throws Exception {
 
-		HttpMessagingTargetRegistry httpMessagingTargetRegistry = CommandUtil.getHttpMessagingTargetRegistry(applicationContextPath);
-		if (httpMessagingTargetRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'HttpMessagingTargetRegistry' not found in " + applicationContextPath);
+		UriMessagingTargetRegistry httpMessagingTargetRegistry = CommandUtil.getUriMessagingTargetRegistry(applicationContextPath);
+		if (httpMessagingTargetRegistry == null) throw new NoSuchBeanDefinitionException("Required bean 'UriMessagingTargetRegistry' not found in " + applicationContextPath);
 
 		for (String messagingTargetPath : httpMessagingTargetRegistry.getMessagingTargetPaths()) {
 
@@ -30,9 +30,9 @@ public abstract class AbstractMessagingTargetsCommand <T> extends AbstractMessag
 	}
 
 	@Override
-	protected void callbackMessagingTargetFactory(final String messagingTargetFactoryPath, final MessagingTargetFactory messagingTargetFactory, HttpMessagingTargetRegistry httpMessagingTargetRegistry, T state) throws Exception {
+	protected void callbackMessagingTargetFactory(final String messagingTargetFactoryPath, final UriMessagingTargetFactory messagingTargetFactory, UriMessagingTargetRegistry httpMessagingTargetRegistry, T state) throws Exception {
 
-		if (! (messagingTargetFactory instanceof RegistryGraphMessagingTargetFactory)) return;
+		if (! (messagingTargetFactory instanceof RegistryUriMessagingTargetFactory)) return;
 
 		Iterator<XDIArc> ownerPeerRootXDIArcs = messagingTargetFactory.getOwnerPeerRootXDIArcs();
 
@@ -56,5 +56,5 @@ public abstract class AbstractMessagingTargetsCommand <T> extends AbstractMessag
 		}
 	}
 
-	protected abstract void callbackMessagingTarget(String messagingTargetPath, MessagingTarget messagingTarget, HttpMessagingTargetRegistry httpMessagingTargetRegistry, T state) throws Exception;
+	protected abstract void callbackMessagingTarget(String messagingTargetPath, MessagingTarget messagingTarget, UriMessagingTargetRegistry httpMessagingTargetRegistry, T state) throws Exception;
 }

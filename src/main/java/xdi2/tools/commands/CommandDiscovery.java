@@ -36,13 +36,13 @@ public class CommandDiscovery implements Command {
 
 			// from registry
 
-			discoveryResultRegistry = discoveryClient.discoverFromRegistry(XDIAddress.create(address), null);
+			discoveryResultRegistry = discoveryClient.discoverFromRegistry(XDIAddress.create(address));
 
 			// from authority
 
 			if (discoveryResultRegistry != null && discoveryResultRegistry.getXdiEndpointUrl() != null) {
 
-				discoveryResultAuthority = discoveryClient.discoverFromAuthority(discoveryResultRegistry.getXdiEndpointUrl(), discoveryResultRegistry.getCloudNumber(), null);
+				discoveryResultAuthority = discoveryClient.discoverFromAuthority(discoveryResultRegistry.getXdiEndpointUrl(), discoveryResultRegistry.getCloudNumber());
 			}
 
 			// output result

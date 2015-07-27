@@ -2,6 +2,7 @@ package xdi2.tools.commands;
 
 import java.io.StringWriter;
 import java.net.URI;
+import java.util.Arrays;
 import java.util.Map;
 
 import xdi2.client.impl.http.XDIHttpClient;
@@ -55,7 +56,9 @@ public class CommandDiscovery implements Command {
 				writer.write("Information from registry:\n\n");
 
 				writer.write("Cloud Number: " + discoveryResultRegistry.getCloudNumber() + "\n");
+				writer.write("Cloud Names: " + Arrays.asList(discoveryResultRegistry.getCloudNames()) + "\n");
 				writer.write("XDI Endpoint URI: " + discoveryResultRegistry.getXdiEndpointUri() + "\n");
+				writer.write("Default Endpoint URI: " + discoveryResultRegistry.getDefaultEndpointUri() + "\n");
 				writer.write("Signature Public Key: " + discoveryResultRegistry.getSignaturePublicKey() + "\n");
 				writer.write("Encryption Public Key: " + discoveryResultRegistry.getEncryptionPublicKey() + "\n");
 
@@ -81,7 +84,9 @@ public class CommandDiscovery implements Command {
 				writer2.write("Information from authority:\n\n");
 
 				writer2.write("Cloud Number: " + discoveryResultAuthority.getCloudNumber() + "\n");
+				writer2.write("Cloud Names: " + Arrays.asList(discoveryResultAuthority.getCloudNames()) + "\n");
 				writer2.write("XDI Endpoint URI: " + discoveryResultAuthority.getXdiEndpointUri() + "\n");
+				writer2.write("Default Endpoint URI: " + discoveryResultAuthority.getDefaultEndpointUri() + "\n");
 				writer2.write("Signature Public Key: " + discoveryResultAuthority.getSignaturePublicKey() + "\n");
 				writer2.write("Encryption Public Key: " + discoveryResultAuthority.getEncryptionPublicKey() + "\n");
 

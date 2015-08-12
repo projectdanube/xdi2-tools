@@ -1,4 +1,5 @@
-/bin
 /target
 /xdi2-bdb
 /plugins
+log4j.log
+

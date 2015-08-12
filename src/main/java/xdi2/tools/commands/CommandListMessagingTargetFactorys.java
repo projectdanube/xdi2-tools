@@ -1,11 +1,9 @@
 package xdi2.tools.commands;
 
-import xdi2.messaging.target.exceptions.Xdi2MessagingException;
 import xdi2.messaging.target.factory.impl.uri.UriMessagingTargetFactory;
 import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
-import xdi2.transport.exceptions.Xdi2TransportException;
 import xdi2.transport.registry.impl.uri.UriMessagingTargetRegistry;
 
 @CommandName("list-messaging-target-factorys")
@@ -26,7 +24,7 @@ public class CommandListMessagingTargetFactorys extends AbstractMessagingTargetF
 	}
 
 	@Override
-	protected void callbackMessagingTargetFactory(String messagingTargetFactoryPath, UriMessagingTargetFactory messagingTargetFactory, UriMessagingTargetRegistry uriMessagingTargetRegistry, Object state) throws Xdi2TransportException, Xdi2MessagingException {
+	protected void callbackMessagingTargetFactory(String messagingTargetFactoryPath, UriMessagingTargetFactory messagingTargetFactory, UriMessagingTargetRegistry uriMessagingTargetRegistry, Object state) {
 
 		StringBuilder buffer = new StringBuilder();
 

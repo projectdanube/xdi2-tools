@@ -1,5 +1,7 @@
-/target
-/xdi2-bdb
-/plugins
 log4j.log
-
+.classpath
+.project
+/.settings/
+/bin/
+/target/
+/tmp/

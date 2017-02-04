@@ -14,8 +14,8 @@ import xdi2.tools.commands.CommandDiscovery;
 import xdi2.tools.commands.CommandDumpGraph;
 import xdi2.tools.commands.CommandGenerateDigestSecretToken;
 import xdi2.tools.commands.CommandListClassLoaders;
-import xdi2.tools.commands.CommandListMessagingTargetFactorys;
-import xdi2.tools.commands.CommandListMessagingTargets;
+import xdi2.tools.commands.CommandListMessagingContainerFactorys;
+import xdi2.tools.commands.CommandListMessagingContainers;
 import xdi2.tools.commands.CommandListPlugins;
 import xdi2.tools.commands.CommandLoadGraph;
 import xdi2.tools.commands.CommandMaintenance;
@@ -30,8 +30,8 @@ public class XDI2Tools {
 	private final static Command[] commands = new Command[] {
 		new CommandListPlugins(),
 		new CommandListClassLoaders(),
-		new CommandListMessagingTargetFactorys(),
-		new CommandListMessagingTargets(),
+		new CommandListMessagingContainerFactorys(),
+		new CommandListMessagingContainers(),
 		new CommandDumpGraph(),
 		new CommandLoadGraph(),
 		new CommandBackupGraphs(),

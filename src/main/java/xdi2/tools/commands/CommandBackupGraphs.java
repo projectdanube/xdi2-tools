@@ -9,7 +9,7 @@ import xdi2.core.Graph;
 import xdi2.core.io.MimeType;
 import xdi2.core.io.XDIWriter;
 import xdi2.core.io.XDIWriterRegistry;
-import xdi2.messaging.target.exceptions.Xdi2MessagingException;
+import xdi2.messaging.container.exceptions.Xdi2MessagingException;
 import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
@@ -38,15 +38,15 @@ public class CommandBackupGraphs extends AbstractGraphsCommand<CommandBackupGrap
 	}
 
 	@Override
-	protected void callbackGraph(String messagingTargetPath, Graph graph, MyState state) throws Xdi2MessagingException, IOException {
+	protected void callbackGraph(String messagingContainerPath, Graph graph, MyState state) throws Xdi2MessagingException, IOException {
 
-		String zipEntryName = messagingTargetPath + ".xdi";
+		String zipEntryName = messagingContainerPath + ".xdi";
 		if (zipEntryName.startsWith("/")) zipEntryName = zipEntryName.substring(1);
 
 		ZipEntry zipEntry = new ZipEntry(zipEntryName);
 		state.zipOutputStream.putNextEntry(zipEntry);
 
-		System.out.println("Backing up graph " + messagingTargetPath + ".");
+		System.out.println("Backing up graph " + messagingContainerPath + ".");
 
 		XDIWriter writer = state.mimeType == null ? XDIWriterRegistry.getDefault() : XDIWriterRegistry.forMimeType(new MimeType(state.mimeType));
 
@@ -57,7 +57,7 @@ public class CommandBackupGraphs extends AbstractGraphsCommand<CommandBackupGrap
 			writer.write(graph, state.zipOutputStream);
 		} catch (Exception ex) {
 
-			System.err.println("Problem while backing up graph " + messagingTargetPath);
+			System.err.println("Problem while backing up graph " + messagingContainerPath);
 			ex.printStackTrace(System.err);
 		}
 

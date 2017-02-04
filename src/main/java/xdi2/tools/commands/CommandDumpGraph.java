@@ -6,7 +6,7 @@ import xdi2.core.Graph;
 import xdi2.core.io.MimeType;
 import xdi2.core.io.XDIWriter;
 import xdi2.core.io.XDIWriterRegistry;
-import xdi2.messaging.target.exceptions.Xdi2MessagingException;
+import xdi2.messaging.container.exceptions.Xdi2MessagingException;
 import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
@@ -31,7 +31,7 @@ public class CommandDumpGraph extends AbstractGraphCommand<CommandDumpGraph.MySt
 	}
 
 	@Override
-	protected void callbackGraph(String messagingTargetPath, Graph graph, MyState state) throws Xdi2MessagingException, IOException {
+	protected void callbackGraph(String messagingContainerPath, Graph graph, MyState state) throws Xdi2MessagingException, IOException {
 
 		XDIWriter writer = state.mimeType == null ? XDIWriterRegistry.getDefault() : XDIWriterRegistry.forMimeType(new MimeType(state.mimeType));
 
@@ -42,7 +42,7 @@ public class CommandDumpGraph extends AbstractGraphCommand<CommandDumpGraph.MySt
 			writer.write(graph, System.out);
 		} catch (Exception ex) {
 
-			System.err.println("Problem while dumping graph " + messagingTargetPath);
+			System.err.println("Problem while dumping graph " + messagingContainerPath);
 			ex.printStackTrace(System.err);
 		}
 	}

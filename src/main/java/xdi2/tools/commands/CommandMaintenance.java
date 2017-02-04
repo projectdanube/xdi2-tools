@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import xdi2.core.Graph;
 import xdi2.core.util.GraphUtil;
-import xdi2.messaging.target.exceptions.Xdi2MessagingException;
+import xdi2.messaging.container.exceptions.Xdi2MessagingException;
 import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
@@ -27,7 +27,7 @@ public class CommandMaintenance extends AbstractGraphsCommand<Object> implements
 	}
 
 	@Override
-	protected void callbackGraph(String messagingTargetPath, Graph graph, Object state) throws Xdi2MessagingException, IOException {
+	protected void callbackGraph(String messagingContainerPath, Graph graph, Object state) throws Xdi2MessagingException, IOException {
 
 		System.out.println("Maintainence for graph " + GraphUtil.getOwnerXDIAddress(graph));
 	}

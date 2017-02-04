@@ -11,15 +11,15 @@ import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
-import xdi2.transport.registry.impl.uri.UriMessagingTargetRegistry;
+import xdi2.transport.registry.impl.uri.UriMessagingContainerRegistry;
 
 public class CommandUtil {
 
-	private static Map<String, UriMessagingTargetRegistry> uriMessagingTargetRegistries = new HashMap<String, UriMessagingTargetRegistry> ();
+	private static Map<String, UriMessagingContainerRegistry> uriMessagingContainerRegistries = new HashMap<String, UriMessagingContainerRegistry> ();
 
-	public static UriMessagingTargetRegistry getUriMessagingTargetRegistry(String applicationContextPath) throws IOException {
+	public static UriMessagingContainerRegistry getUriMessagingContainerRegistry(String applicationContextPath) throws IOException {
 
-		if (uriMessagingTargetRegistries.containsKey(applicationContextPath)) return uriMessagingTargetRegistries.get(applicationContextPath);
+		if (uriMessagingContainerRegistries.containsKey(applicationContextPath)) return uriMessagingContainerRegistries.get(applicationContextPath);
 
 		File applicationContextFile = new File(applicationContextPath);
 		if (! applicationContextFile.exists()) throw new FileNotFoundException(applicationContextPath + " not found");
@@ -27,10 +27,10 @@ public class CommandUtil {
 		Resource applicationContextResource = new FileSystemResource(applicationContextFile);
 		ApplicationContext applicationContext = makeApplicationContext(applicationContextResource);
 
-		UriMessagingTargetRegistry uriMessagingTargetRegistry = (UriMessagingTargetRegistry) applicationContext.getBean("UriMessagingTargetRegistry");
-		uriMessagingTargetRegistries.put(applicationContextPath, uriMessagingTargetRegistry);
+		UriMessagingContainerRegistry uriMessagingContainerRegistry = (UriMessagingContainerRegistry) applicationContext.getBean("UriMessagingContainerRegistry");
+		uriMessagingContainerRegistries.put(applicationContextPath, uriMessagingContainerRegistry);
 
-		return uriMessagingTargetRegistry;
+		return uriMessagingContainerRegistry;
 	}
 
 	private static ApplicationContext makeApplicationContext(Resource... resources) {

@@ -10,7 +10,7 @@ import xdi2.core.io.XDIReader;
 import xdi2.core.io.XDIWriter;
 import xdi2.core.io.XDIWriterRegistry;
 import xdi2.core.io.readers.AutoReader;
-import xdi2.messaging.target.exceptions.Xdi2MessagingException;
+import xdi2.messaging.container.exceptions.Xdi2MessagingException;
 import xdi2.tools.annotations.CommandArgs;
 import xdi2.tools.annotations.CommandName;
 import xdi2.tools.annotations.CommandUsage;
@@ -34,9 +34,9 @@ public class CommandRebuildGraphs extends AbstractGraphsCommand<CommandRebuildGr
 	}
 
 	@Override
-	protected void callbackGraph(String messagingTargetPath, Graph graph, MyState state) throws Xdi2MessagingException, IOException {
+	protected void callbackGraph(String messagingContainerPath, Graph graph, MyState state) throws Xdi2MessagingException, IOException {
 
-		System.out.println("Rebuilding graph " + messagingTargetPath + ".");
+		System.out.println("Rebuilding graph " + messagingContainerPath + ".");
 
 		XDIWriter writer = state.mimeType == null ? XDIWriterRegistry.getDefault() : XDIWriterRegistry.forMimeType(new MimeType(state.mimeType));
 		XDIReader reader = new AutoReader(null);
@@ -54,7 +54,7 @@ public class CommandRebuildGraphs extends AbstractGraphsCommand<CommandRebuildGr
 			reader.read(graph, stringReader);
 		} catch (Exception ex) {
 
-			System.err.println("Problem while rebuilding graph " + messagingTargetPath);
+			System.err.println("Problem while rebuilding graph " + messagingContainerPath);
 			ex.printStackTrace(System.err);
 		}
 	}

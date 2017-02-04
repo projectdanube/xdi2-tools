@@ -34,20 +34,20 @@ public class CommandRestoreGraphs extends AbstractGraphsCommand<CommandRestoreGr
 	}
 
 	@Override
-	protected void callbackGraph(String messagingTargetPath, Graph graph, MyState state) throws Exception {
+	protected void callbackGraph(String messagingContainerPath, Graph graph, MyState state) throws Exception {
 
-		String zipEntryName = messagingTargetPath + ".xdi";
+		String zipEntryName = messagingContainerPath + ".xdi";
 		if (zipEntryName.startsWith("/")) zipEntryName = zipEntryName.substring(1);
 
 		ZipEntry zipEntry = state.zipFile.getEntry(zipEntryName);
 
 		if (zipEntry == null) {
 
-			System.out.println("Not restoring graph " + messagingTargetPath + ": Not found in ZIP file.");
+			System.out.println("Not restoring graph " + messagingContainerPath + ": Not found in ZIP file.");
 			return;
 		} else {
 
-			System.out.println("Restoring graph " + messagingTargetPath + ".");
+			System.out.println("Restoring graph " + messagingContainerPath + ".");
 		}
 
 		InputStream zipInputStream = state.zipFile.getInputStream(zipEntry);
@@ -60,7 +60,7 @@ public class CommandRestoreGraphs extends AbstractGraphsCommand<CommandRestoreGr
 			reader.read(graph, zipInputStream);
 		} catch (Exception ex) {
 
-			System.err.println("Problem while restoring graph " + messagingTargetPath);
+			System.err.println("Problem while restoring graph " + messagingContainerPath);
 			ex.printStackTrace(System.err);
 		}
 

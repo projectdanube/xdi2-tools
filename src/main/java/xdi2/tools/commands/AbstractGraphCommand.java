@@ -27,7 +27,7 @@ public abstract class AbstractGraphCommand <T> implements Command {
 
 		if (messagingContainer == null) {
 
-			System.out.println("No messaging target found at request path " + requestPath);
+			System.out.println("No messaging container found at request path " + requestPath);
 			return;
 		}
 
